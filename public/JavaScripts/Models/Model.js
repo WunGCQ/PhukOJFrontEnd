@@ -167,6 +167,13 @@ Model.prototype.renderPage = function()
         return text;
     }
 };
+
+Model.XHRPathHead = function() {
+    if(Model.XHRPathHeadStr == undefined) {
+        Model.XHRPathHeadStr = jRouter().protocol() + '://' + jRouter().domainName;
+    }
+    return Model.XHRPathHeadStr;
+};
 //Model.prototype.renderPage = function(){
 //    var template = this.getTemplateText();
 //

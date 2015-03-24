@@ -1,4 +1,24 @@
-<article data-id="${group.id}" data-name="${group.name}" data-contest_count="${group.group-contest_count}" data-problem_count="${group.problem_count}" data-member_count="${group.member_count}">
+<style>
+    #membership-section{
+        display: block;
+        width: 700px;
+        text-align: center;
+        height: auto;
+        clear: both;
+    }
+    #load-membership {
+        display: block;
+        width: 15px;
+        height: 15px;
+        text-align: center;
+        line-height: 15px;
+        background-color: #aaa;
+        color:#494949;
+        float: left;
+        margin-top: 2px;
+    }
+</style>
+<article data-id="${group.group_id}" data-name="${group.name}" data-contest_count="${group.group-contest_count}" data-problem_count="${group.problem_count}" data-member_count="${group.member_count}">
     <header>
         小组名称：${group.name}
     </header>
@@ -22,5 +42,8 @@
         <p>
             小组成员列表
         </p>
+    </section>
+    <section id="membership-section">
+        <span id="load-membership" onclick="MembershipController.showMembership(${group.group_id})">+</span>
     </section>
 </article>

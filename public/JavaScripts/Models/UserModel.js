@@ -21,13 +21,13 @@ UserModel.prototype = new Model();
 (
     function()
     {
-        UserModel.prototype.templatePath = 'http://localhost:63342/github/ngtest/public/templates/user.html';
-        UserModel.prototype.AddPath      = 'http://localhost:63342/github/ngtest/public/JSON/register.json';
-        UserModel.prototype.RetrievePath = 'http://localhost:63342/github/ngtest/public/JSON/get_user.json';
-        UserModel.prototype.UpdatePath   = 'http://localhost:63342/github/ngtest/public/JSON/update_user.json';
-        UserModel.prototype.LoginPath    = 'http://localhost:63342/github/ngtest/public/JSON/login.json';
-        UserModel.prototype.LogoutPath   = 'http://localhost:63342/github/ngtest/public/JSON/logout.json';
-        UserModel.prototype.UpdatePWDPath   = 'http://localhost:63342/github/ngtest/public/JSON/update_password.json';
+        UserModel.prototype.templatePath  = Model.XHRPathHead() + '/templates/user.html';
+        UserModel.prototype.AddPath       = Model.XHRPathHead() + '/api/user/register';
+        UserModel.prototype.RetrievePath  = Model.XHRPathHead() + '/api/user/info';
+        UserModel.prototype.UpdatePath    = Model.XHRPathHead() + '/api/user/update';
+        UserModel.prototype.LoginPath     = Model.XHRPathHead() + '/api/user/login';
+        UserModel.prototype.LogoutPath    = Model.XHRPathHead() + '/api/user/logout';
+        UserModel.prototype.UpdatePWDPath = Model.XHRPathHead() + '/api/user/password/update';
     }
 )();
 
@@ -122,7 +122,7 @@ UserModel.prototype.logout = function()
                 success: function(Data)
                 {
                     //返回数据，而且注销成功
-                    if(Data.status==1)
+                    if(Data.code==1)
                     {
                         UserModel.prototype.setUserBarUnLog();
                         //设为false
@@ -183,7 +183,7 @@ UserModel.prototype.RETRIEVE = function(arg)
             dataType: "json",
             success: function(Data)
             {
-                if(Data.status==1)
+                if(Data.code==1)
                 {
                     window.currentUser = new UserModel(Data.user);
                     window.currentUser.writeCookie(Data.user.username);
@@ -242,7 +242,7 @@ UserModel.prototype.UPDATE = function(arg)
             dataType: "json",
             success: function(Data)
             {
-                if(Data.status==1)
+                if(Data.code==1)
                 {
                     window.currentUser = new UserModel(Data.user);
                     window.currentUser.writeCookie(Data.user.username);
@@ -288,7 +288,7 @@ UserModel.prototype.UPDATEPASSWORD = function(arg)
             dataType: "json",
             success: function(Data)
             {
-                if(Data.status==1)
+                if(Data.code==1)
                 {
                     //window.currentUser = new UserModel(Data.user);
                     //window.currentUser.writeCookie(Data.user.username);

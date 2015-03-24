@@ -19,10 +19,11 @@ window.GroupModel = function(groupData){
 GroupModel.prototype = new Model();
 //需要设置每个数据模型的增删改查路径
 (function(){
-    GroupModel.prototype.templatePath = 'http://localhost:63342/github/ngtest/public/templates/group.html';
-    GroupModel.prototype.AddPath      = 'http://localhost:63342/github/ngtest/public/JSON/create_group.json';
-    GroupModel.prototype.RetrievePath = 'http://localhost:63342/github/ngtest/public/JSON/get_group.json';
-    GroupModel.prototype.UpdatePath   = 'http://localhost:63342/github/ngtest/public/JSON/update_group.json';
+    GroupModel.prototype.templatePath = Model.XHRPathHead() + '/templates/group.html';
+    GroupModel.prototype.AddPath      = Model.XHRPathHead() + '/api/group/create';
+    GroupModel.prototype.RetrievePath = Model.XHRPathHead() + '/api/group/info';
+    //GroupModel.prototype.UpdatePath   = Model.XHRPathHead() + '/api/group/update';
+    GroupModel.prototype.joinPath     = Model.XHRPathHead() + '/api/group/membership/transfer';
     GroupModel.prototype.GroupDataCache = new Array();//题目的缓存,缓存的是对象的json Data,省去向服务器查询
 })();
 
@@ -89,7 +90,7 @@ GroupModel.prototype.RETRIEVE = function(id,callback)
                 async: false,
                 dataType: "json",
                 success: function(Data) {
-                    if (Data.status == 1)//返回无误
+                    if (Data.code == 1)//返回无误
                     {
                         if(window.currentGroup == null || typeof window.currentGroup == "undefined"){
                             window.currentGroup = new GroupModel(Data.group);

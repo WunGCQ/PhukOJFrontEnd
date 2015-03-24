@@ -18,8 +18,8 @@ ProblemListModel.prototype = new Model();
 (
     function()
     {
-        ProblemListModel.prototype.templatePath = 'http://localhost:63342/github/ngtest/public/templates/contestProblemList.html';
-        ProblemListModel.prototype.RetrievePath = 'http://localhost:63342/github/ngtest/public/JSON/get_use_list.json';
+        ProblemListModel.prototype.templatePath = Model.XHRPathHead() + '/templates/contestProblemList.html';
+        ProblemListModel.prototype.RetrievePath = Model.XHRPathHead() + 'api/problem/list';
     }
 )();
 
@@ -45,7 +45,7 @@ ProblemListModel.prototype.RETRIEVE = function(pageData,callback)
             async: false,
             dataType: "json",
             success: function(Data) {
-                if (Data.status == 1)//返回无误
+                if (Data.code == 1)//返回无误
                 {
 
                     if(typeof callback == "function"){

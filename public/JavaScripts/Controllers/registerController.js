@@ -130,13 +130,13 @@ var registerController = function(){
         console.log('准备发送注册数据');
         ajax.send(
             {
-                url: 'http://localhost:63342/github/ngtest/public/JSON/register.json',
+                url: UserModel.prototype.AddPath,
                 data: this.registerData,
                 type: 'POST',
                 dataType: "json",
                 success: function(data)
                 {
-                    if(data.status==1)
+                    if(data.code==1)
                     {
                         console.log('登陆成功');
                         console.log(data);

@@ -20,8 +20,8 @@ ContestListModel.prototype = new Model();
     function()
     {
         //todo 伪造json数据
-        ContestListModel.prototype.templatePath = 'http://localhost:63342/github/ngtest/public/templates/contestList.html';
-        ContestListModel.prototype.RetrievePath = 'http://localhost:63342/github/ngtest/public/JSON/get_contest_list.json';
+        ContestListModel.prototype.templatePath = Model.XHRPathHead() + '/templates/contestList.html';
+        ContestListModel.prototype.RetrievePath = Model.XHRPathHead() + '/api/contest/list';
     }
 )();
 
@@ -45,7 +45,7 @@ ContestListModel.prototype.RETRIEVE = function(pageData,callback)
             async: false,
             dataType: "json",
             success: function(Data) {
-                if (Data.status == 1)//返回无误
+                if (Data.code == 1)//返回无误
                 {
 
                     if(typeof callback == "function"){

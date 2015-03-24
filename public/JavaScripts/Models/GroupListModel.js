@@ -19,8 +19,8 @@ GroupListModel.prototype = new Model();
 (
     function()
     {
-        GroupListModel.prototype.templatePath = 'http://localhost:63342/github/ngtest/public/templates/groupList.html';
-        GroupListModel.prototype.RetrievePath = 'http://localhost:63342/github/ngtest/public/JSON/get_group_list.json';
+        GroupListModel.prototype.templatePath = Model.XHRPathHead() + '/templates/groupList.html';
+        GroupListModel.prototype.RetrievePath = Model.XHRPathHead() + '/api/group/list';
     }
 )();
 
@@ -44,7 +44,7 @@ GroupListModel.prototype.RETRIEVE = function(pageData,callback)
             async: false,
             dataType: "json",
             success: function(Data) {
-                if (Data.status == 1)//返回无误
+                if (Data.code == 1)//返回无误
                 {
 
                     if(typeof callback == "function"){

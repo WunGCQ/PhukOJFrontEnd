@@ -93,7 +93,7 @@ var loginController = function(){
                     //将提示等待的信息消除
                     //topMessage.prototype.remove();
                     //removeAllMessages();
-                    if(data.status==1)
+                    if(data.code == 1)
                     {
                         console.log('登陆成功');
                         console.log(data);

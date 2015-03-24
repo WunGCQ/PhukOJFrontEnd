@@ -122,3 +122,28 @@ function loadScriptOrStyleSheet(filename,filetype)
     }
 }
 
+    window.testSymbols = function(str) {
+        if(str.length>0) {
+            var numberOfLegalLetters = 0;
+            var number = 0;
+            for(var i = 0; i < str.length ; i++){
+                if(str[i]!="+" && str[i]!="-") {
+                    number++;
+                    if(i-1<0){
+                        return false;
+                    } else if(i>=str.length){
+                        return false
+                    }else if(str[i-1]=="+" && str[i+1]=="+") {
+                        numberOfLegalLetters++;
+                    }
+                }
+            }
+            if(numberOfLegalLetters == number){
+                return true;
+            } else {
+                return false;
+            }
+        } else{
+            return false;
+        }
+    };

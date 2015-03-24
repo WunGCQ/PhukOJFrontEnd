@@ -4,14 +4,14 @@
 function checkTemplateUpdate(){
     ajax.send(
         {
-            url: 'http://localhost:63342/github/ngtest/public/JSON/check_template_update.json',
+            url: Model.XHRPathHead() + '/JSON/check_template_update.json',
             data: null,
-            type: "GET",
+            type: "POST",
             async:false,
             dataType: "json",
             success: function(Data)
             {
-                if(Data.status==1)
+                if(Data.code==1)
                 {
                     window.templateVersionInfo = Data.versionInfo;
                     for( t in Data.versionInfo ){

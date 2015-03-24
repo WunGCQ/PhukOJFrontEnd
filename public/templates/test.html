@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    var arr = [1,3,5,324,23,67,43,9,34,7,23,0,2,72,5,2,23,76,234];
+    function quickSort(left, right){
+        var i, j, t,temp;
+        if(left > right) {
+            return false;
+        }
+        temp = arr[left];
+        i = left;
+        j = right;
+        while(i != j) {
+            while(arr[j] >= temp && i<j ) {
+                j--;
+            }
+            while(arr[i] <= temp && i<j ) {
+                i++;
+            }
+            if(i < j) {
+               t = arr[i];
+               arr[i] = arr[j];
+                arr[j] = t;
+            }
+        }
+        arr[left] = arr[i];
+        arr[i] = temp;
+
+        quickSort(left, i-1);
+        quickSort(i+1, right);
+
+        return;
+    }
+    quickSort( 0, arr.length - 1 );
+</script>
+</body>
+</html>

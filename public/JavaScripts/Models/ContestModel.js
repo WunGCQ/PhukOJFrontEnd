@@ -20,10 +20,10 @@ window.ContestModel = function(contestData){
 ContestModel.prototype = new Model();
 //需要设置每个数据模型的增删改查路径
 (function(){
-    ContestModel.prototype.templatePath = 'http://localhost:63342/github/ngtest/public/templates/contest.html';
-    ContestModel.prototype.AddPath      = 'http://localhost:63342/github/ngtest/public/JSON/create_contest.json';
-    ContestModel.prototype.RetrievePath = 'http://localhost:63342/github/ngtest/public/JSON/get_contest.json';
-    ContestModel.prototype.UpdatePath   = 'http://localhost:63342/github/ngtest/public/JSON/update_contest.json';
+    ContestModel.prototype.templatePath = Model.XHRPathHead() + '/templates/contest.html';
+    ContestModel.prototype.AddPath      = Model.XHRPathHead() + '/api/contest/create';
+    ContestModel.prototype.RetrievePath = Model.XHRPathHead() + '/api/contest/get';
+    ContestModel.prototype.UpdatePath   = Model.XHRPathHead() + '/api/contest/update';
     ContestModel.prototype.ContestDataCache = [];//题目的缓存,缓存的是对象的json Data,省去向服务器查询
 })();
 
@@ -88,7 +88,7 @@ ContestModel.prototype.RETRIEVE = function(id,callback)
                 async: false,
                 dataType: "json",
                 success: function(Data) {
-                    if (Data.status == 1)//返回无误
+                    if (Data.code == 1)//返回无误
                     {
                         if(window.currentContest == null || typeof window.currentContest == "undefined"){
                             window.currentContest = new ContestModel(Data.contest);
