@@ -115,10 +115,10 @@ var loginController = function(){
                     }
                     else{
                         topMessage({
-                            Message:data.error,
+                            Message:data.message,
                             Type:'fail'
                         });
-                        console.error(data.error);
+                        console.error(data.message);
                         return null;
                     }
                 }

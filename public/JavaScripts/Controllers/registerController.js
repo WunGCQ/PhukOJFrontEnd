@@ -153,7 +153,10 @@ var registerController = function(){
                             });
                     }
                     else{
-                        topMessage(data.message,'fail');
+                        topMessage({
+                            Message:data.message,
+                            Type:'fail'
+                        });
                         console.error(data.message);
                         return null;
                     }
