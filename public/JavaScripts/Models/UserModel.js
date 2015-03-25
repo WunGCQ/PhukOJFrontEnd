@@ -34,14 +34,9 @@ UserModel.prototype = new Model();
 UserModel.prototype.init = function(UserData){
     var UserData = UserData||this.modelData;
     if(typeof UserData != "undefined"){
-        this.id         = UserData.id;
-        this.username   = UserData.username;
-        this.nickname   = UserData.nickname;
-        this.student_id = UserData.student_id;
-        this.school     = UserData.school;
-        this.college    = UserData.college;
-        this.email      = UserData.email;
-        this.head       = UserData.head;
+        for(var i in UserData) {
+            this[i] = UserData[i];
+        }
     }
     this.isUserInfoShown = false;
 };
@@ -75,10 +70,11 @@ UserModel.prototype.checkIsLogin = function(){
     }
 };
 
-UserModel.prototype.writeCookie = function(name){
+UserModel.prototype.writeCookie = function(name,token){
     var username = name||this.username;
     cookieMethods.setCookie('isLogin','true');
     cookieMethods.setCookie('username',name);
+    cookieMethods.setCookie('token',token);
 };
 
 
@@ -138,7 +134,7 @@ UserModel.prototype.logout = function()
                     else
                     {
                         topMessage({
-                            Message:Data.error,
+                            Message:Data.message,
                             Type:'fail'
                         });
                     }
@@ -192,7 +188,7 @@ UserModel.prototype.RETRIEVE = function(arg)
                 else
                 {
                     topMessage({
-                        Message:Data.error,
+                        Message:Data.message,
                         Type:'fail'
                     });
                 }
@@ -257,7 +253,7 @@ UserModel.prototype.UPDATE = function(arg)
                 else
                 {
                     topMessage({
-                        Message:Data.error,
+                        Message:Data.message,
                         Type:'fail'
                     });
                 }
@@ -278,6 +274,7 @@ UserModel.prototype.UPDATEPASSWORD = function(arg)
         var data = null;
     }else{
         var data = arg;
+        data["user_id"] = window.currentUser.user_id;
     }
 
     ajax.send(
@@ -301,7 +298,7 @@ UserModel.prototype.UPDATEPASSWORD = function(arg)
                 else
                 {
                     topMessage({
-                        Message:Data.error,
+                        Message:Data.message,
                         Type:'fail'
                     });
                 }

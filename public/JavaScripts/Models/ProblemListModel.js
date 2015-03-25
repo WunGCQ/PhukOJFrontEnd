@@ -19,7 +19,7 @@ ProblemListModel.prototype = new Model();
     function()
     {
         ProblemListModel.prototype.templatePath = Model.XHRPathHead() + '/templates/contestProblemList.html';
-        ProblemListModel.prototype.RetrievePath = Model.XHRPathHead() + 'api/problem/list';
+        ProblemListModel.prototype.RetrievePath = Model.XHRPathHead() + '/api/problem/list';
     }
 )();
 
@@ -56,7 +56,7 @@ ProblemListModel.prototype.RETRIEVE = function(pageData,callback)
                 }
                 else {
                     topMessage({
-                        Message: Data.error,
+                        Message: Data.message,
                         Type: 'fail'
                     });
                     return true;

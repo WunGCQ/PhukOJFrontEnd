@@ -101,7 +101,8 @@ var loginController = function(){
                         //无论如何重新初始化用户
                         //控制器生成UserModel
                         window.currentUser = new UserModel(data.user);
-                        window.currentUser.writeCookie(data.user.username);
+                        window.currentUser.writeCookie(data.user.username, data.token);
+                        //window.currentUser.writeCookie(data.user.username);
                         //补全界面元素
                         window.currentUser.setUserBarLog(data.user.username);
 

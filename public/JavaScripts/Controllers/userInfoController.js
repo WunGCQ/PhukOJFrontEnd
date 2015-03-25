@@ -122,7 +122,7 @@ UserInfoController.updateUserInfo = function()
     }
     else
     {
-        res['id'] = window.currentUser.id;
+        res['user_id'] = window.currentUser.user_id;
         window.currentUser.UPDATE(res);
     }
 };

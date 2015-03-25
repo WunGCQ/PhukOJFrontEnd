@@ -60,7 +60,7 @@ PrivilegeModel.prototype.RETRIEVE = function(id,callback)
     if( typeof id == 'undefined'){
         var data = null;
     }else{
-        var data = {'id':id};
+        var data = {'user_id':id};
     }
     var problemData = PrivilegeModel.getPrivilegeDataCache(id);//从缓存的题目数据中获取
     if(problemData!=false){ //存在于缓存中，说明之前取过。

@@ -24,7 +24,7 @@ function checkTemplateUpdate(){
                 else
                 {
                     topMessage({
-                        Message:Data.error,
+                        Message:Data.message,
                         Type:'fail'
                     });
                 }

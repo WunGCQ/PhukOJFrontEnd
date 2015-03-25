@@ -140,6 +140,9 @@ var registerController = function(){
                     {
                         console.log('登陆成功');
                         console.log(data);
+                        window.currentUser = new UserModel(data.user);
+                        window.currentUser.writeCookie(data.user.username, data.token);
+
                         //todo
                         //控制器生成UserModel
                         //return data;
@@ -150,8 +153,8 @@ var registerController = function(){
                             });
                     }
                     else{
-                        topMessage(data.error,'fail');
-                        console.error(data.error);
+                        topMessage(data.message,'fail');
+                        console.error(data.message);
                         return null;
                     }
                 }
