@@ -155,8 +155,8 @@ var registerController = function(){
                             });
                     }
                     else{
-                        topMessage(data.error,'fail');
-                        console.error(data.error);
+                        topMessage(data.message,'fail');
+                        console.error(data.message);
                         return null;
                     }
                 }
