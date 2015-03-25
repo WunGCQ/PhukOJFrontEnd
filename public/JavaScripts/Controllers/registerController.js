@@ -26,7 +26,12 @@ var registerController = function(){
         this.form = this.getForm();
         this.registerData = {};
         for(var i = 0; i < this.form.length; i++){
-            this.registerData[this.form[i].name] = this.form[i].value;
+            if( i > this.form.length-3 ) {
+                this.registerData[this.form[i].name] = md5(this.form[i].value);
+            }else {
+                this.registerData[this.form[i].name] = this.form[i].value;
+            }
+
         }
         return this.registerData;
     };
@@ -140,9 +145,6 @@ var registerController = function(){
                     {
                         console.log('登陆成功');
                         console.log(data);
-                        window.currentUser = new UserModel(data.user);
-                        window.currentUser.writeCookie(data.user.username, data.token);
-
                         //todo
                         //控制器生成UserModel
                         //return data;
@@ -153,11 +155,8 @@ var registerController = function(){
                             });
                     }
                     else{
-                        topMessage({
-                            Message:data.message,
-                            Type:'fail'
-                        });
-                        console.error(data.message);
+                        topMessage(data.error,'fail');
+                        console.error(data.error);
                         return null;
                     }
                 }

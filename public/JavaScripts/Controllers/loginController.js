@@ -25,7 +25,15 @@ var loginController = function(){
         this.form = this.getForm();
         this.loginData = {};
         for(var i = 0; i < this.form.length; i++){
-            this.loginData[this.form[i].name] = this.form[i].value;
+            if(i == this.form.length-1 ) {
+
+                this.loginData[this.form[i].name] = md5(this.form[i].value);
+
+            } else {
+
+                this.loginData[this.form[i].name] = this.form[i].value;
+
+            }
         }
         return this.loginData;
     };
