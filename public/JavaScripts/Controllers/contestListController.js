@@ -10,30 +10,30 @@ contestListController.ContestNumberEachPage = 20;
 contestListController.currentContestList = {};
 
 
-contestListController.convertPageToSize = function(page){
-    if(page == null || typeof page == "undefined" || isNaN(page) ){
+contestListController.convertPageToSize = function (page) {
+    if (page == null || typeof page == "undefined" || isNaN(page)) {
         var pageNumber = contestListController.page;
     }
-    contestListController.start = contestListController.ContestNumberEachPage*(pageNumber-1);
+    contestListController.start = contestListController.ContestNumberEachPage * (pageNumber - 1);
     return contestListController.start;
 };
 
-contestListController.showContestList = function(page){
+contestListController.showContestList = function (page) {
     ContestListModel.prototype.loadTemplate();
     var startPosition = contestListController.convertPageToSize(page);
 
     var pageData = {
-        start : startPosition,
-        size  : contestListController.ContestNumberEachPage
+        start: startPosition,
+        size: contestListController.ContestNumberEachPage
     };
 
     contestListController.currentContestList = new ContestListModel();
 
-    contestListController.currentContestList.RETRIEVE(pageData,function(){
+    contestListController.currentContestList.RETRIEVE(pageData, function () {
         var contestListPageText = contestListController.currentContestList.renderPage();
         //contestListPageText += juicer(contestListPageText,{"page":{"page":contestListController.page}});
         $(contestListController.scopeBlock).html(contestListPageText);
-        contestListController.scopeBlock._css('display','block');
+        contestListController.scopeBlock._css('display', 'block');
         var AnchorsToBind = contestListController.scopeBlock.getElementsByTagName("a");
         jRouter.parseAnchor(AnchorsToBind);
         //$('#contest-list').DataTable();

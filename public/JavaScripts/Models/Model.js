@@ -10,96 +10,86 @@
 window.Models = {};//盛放model的容器
 
 
-function Model() {}
+function Model() {
+}
 //设置模板
 
 //获取模板路径
-Model.prototype.getTemplateText = function()
-{
+Model.prototype.getTemplateText = function () {
     return this.template;
 };
 
-Model.prototype.getTemplateUrl = function()
-{
+Model.prototype.getTemplateUrl = function () {
     return this.templatePath;
 };
 
 //增
 Model.prototype.AddPath = null;
 Model.prototype.Addmethod = 'POST';
-Model.prototype.getAddPath = function()
-{
+Model.prototype.getAddPath = function () {
     return {
-        path : this.AddPath,
-        method : this.Addmethod
+        path: this.AddPath,
+        method: this.Addmethod
     };
 };
 //删
 
 Model.prototype.RemovePath = null;
 Model.prototype.Removemethod = 'POST';
-Model.prototype.getRemovePath = function()
-{
+Model.prototype.getRemovePath = function () {
     return {
-        path : this.RemovePath,
-        method : this.Removemethod
+        path: this.RemovePath,
+        method: this.Removemethod
     };
 };
 //改
 Model.prototype.UpdatePath = null;
 Model.prototype.Updatemethod = 'POST';
-Model.prototype.getUpdatePath = function()
-{
+Model.prototype.getUpdatePath = function () {
     return {
-        path : this.UpdatePath,
-        method : this.Updatemethod
+        path: this.UpdatePath,
+        method: this.Updatemethod
     };
 };
 //查
 Model.prototype.RetrievePath = null;
 Model.prototype.Retrievemethod = 'POST';
-Model.prototype.getRetrievePath = function()
-{
+Model.prototype.getRetrievePath = function () {
     return {
-        path : this.RetrievePath,
-        method : this.Retrievemethod
+        path: this.RetrievePath,
+        method: this.Retrievemethod
     };
 };
 //加载模板
-Model.prototype.loadTemplate = function()
-{
+Model.prototype.loadTemplate = function () {
     var templateHTML = this.getTemplateText();
     var temp = this;
-    if(templateHTML == null)
-    {
+    if (templateHTML == undefined ||templateHTML == null) {
         var templateInLocalStorage = localStorage.getItem(this.templatePath);
-        if(templateInLocalStorage == null  ){//localStorage没有找到模板，则ajax请求
-            ajax.send(
+        if (templateInLocalStorage == undefined || templateInLocalStorage == null) {//localStorage没有找到模板，则ajax请求
+            $.ajax(
                 {
                     url: this.getTemplateUrl(),
-                    data: null,
                     type: 'GET',
-                    async:false ,//阻塞异步
+                    async: false,//阻塞异步
                     dataType: "html",
-                    success: function(template)
-                    {
+                    success: function (template) {
                         templateHTML = template;
-                        temp.template = template.replace(/[\r\n]/g,"");
-                        localStorage.setItem(temp.templatePath,temp.template.toString());
-                        localStorage.setItem(temp.templatePath+".Version",window.templateVersionInfo[temp.templatePath]);//版本号对齐
+                        temp.template = template.replace(/[\r\n]/g, "");
+                        localStorage.setItem(temp.templatePath, temp.template.toString());
+                        localStorage.setItem(temp.templatePath + ".Version", window.templateVersionInfo[temp.templatePath]);//版本号对齐
                         return templateHTML;
                     }
                 }
             );
         }
-        else{
+        else {
             this.template = templateInLocalStorage;
             return templateInLocalStorage;
         }
 
     }
-    else
-    {
+    else {
         return templateHTML;
     }
 };
@@ -110,66 +100,57 @@ Model.prototype.loadTemplate = function()
 //所以基于原来的模型能做数据操作的主要是 UPDATE 和 REMOVE
 //ADD 和 RETRIEVE 与 model的先后顺序决定了不能用一个空的数据模型去做
 //不过存储下来可以通过类名的原型函数调用来变相地在全局存储
-Model.prototype.RETRIEVE = function(sendData)
-{
+Model.prototype.RETRIEVE = function (sendData) {
 
 };
-Model.prototype.ADD = function(sendData)
-{
+Model.prototype.ADD = function (sendData) {
 
 };
-Model.prototype.REMOVE = function(sendData)
-{
+Model.prototype.REMOVE = function (sendData) {
 
 };
-Model.prototype.UPDATE = function(sendData)
-{
+Model.prototype.UPDATE = function (sendData) {
 
 };
 
 
-Model.prototype.renderPage = function()
-{
+Model.prototype.renderPage = function () {
     var templateHTML = this.getTemplateText();
     var temp = this;
-    if(templateHTML == null)
-    {
+    if (templateHTML == null) {
         var templateInLocalStorage = localStorage.getItem(this.templatePath);
-        if(templateInLocalStorage == null){//localStorage没有找到模板，则ajax请求
-            ajax.send(
+        if (templateInLocalStorage == null) {//localStorage没有找到模板，则ajax请求
+            $.ajax(
                 {
                     url: this.getTemplateUrl(),
-                    data: null,
                     type: 'GET',
-                    async:false ,//阻塞异步
+                    async: false,//阻塞异步
                     dataType: "html",
-                    success: function(template)
-                    {
+                    success: function (template) {
                         templateHTML = template;
-                        temp.template = template.replace(/[\r\n]/g,"");
-                        localStorage.setItem(temp.templatePath,temp.template.toString());
-                        var text = juicer(temp.template,temp.modelData);
+                        temp.template = template.replace(/[\r\n]/g, "");
+                        localStorage.setItem(temp.templatePath, temp.template.toString());
+                        var text = juicer(temp.template, temp.modelData);
                         return text;
                     }
                 }
             );
         }
-        else{
+        else {
             this.template = templateInLocalStorage;
-            var text = juicer(templateInLocalStorage ,this.modelData);
+            var text = juicer(templateInLocalStorage, this.modelData);
             return text;
         }
 
     }
-    else
-    {
-        var text = juicer(this.template,this.modelData);
+    else {
+        var text = juicer(this.template, this.modelData);
         return text;
     }
 };
 
-Model.XHRPathHead = function() {
-    if(Model.XHRPathHeadStr == undefined) {
+Model.XHRPathHead = function () {
+    if (Model.XHRPathHeadStr == undefined) {
         Model.XHRPathHeadStr = jRouter().protocol() + '://' + jRouter().domainName;
     }
     return Model.XHRPathHeadStr;

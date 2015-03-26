@@ -18,13 +18,11 @@
 
 //路由需要用户自己写实现再由function添加到currentPagejRouter中去；
 
-(function(url)
-{
+(function (url) {
 
     //var document = window.document,navigator = window.navigator,location = window.location;
 
-    var jRouter = function(url)
-    {
+    var jRouter = function (url) {
         return new jRouter.fn.init(url);
     };
 
@@ -32,60 +30,54 @@
 
     jRouter.fn = jRouter.prototype = {
 
-        constructor:jRouter,
-        init:function(url)
-        {
+        constructor: jRouter,
+        init: function (url) {
             var _jRouter = this;
-            this.url = url||window.location.href;
+            this.url = url || window.location.href;
 
-            this.domainName =  this.getdomainName();
+            this.domainName = this.getdomainName();
             //this.localDomainName = window.location.href.split('://')[1].toString().split('/')[0];
-            if(!this.isSupportsHistoryApi())
-            {//错误提示及处理
-                alert( '本站基于HTML5构建，检测到您在使用'+this.getBrowserInfo()[0]+'' +
-                '浏览器，版本号'+this.getBrowserInfo()[1]+'过低，' +
+            if (!this.isSupportsHistoryApi()) {//错误提示及处理
+                alert('本站基于HTML5构建，检测到您在使用' + this.getBrowserInfo()[0] + '' +
+                '浏览器，版本号' + this.getBrowserInfo()[1] + '过低，' +
                 '请升级您的浏览器(IE请升级到10或11)');
             }
             return this;
         },
-        root:'/index/',
+        root: '/index/',
 
-        jRouter:"1.0",
+        jRouter: "1.0",
 
-        url:this.url,
+        url: this.url,
 
-        domainName:(function(){return this.getdomainName();}),
+        domainName: (function () {
+            return this.getdomainName();
+        }),
         //协议
-        protocol:function()
-        {
+        protocol: function () {
             return this.url.split('://')[0];
         },
         //获取域名
-        getdomainName:function()
-        {
+        getdomainName: function () {
             return RegExp('http?://').test(this.url) ? this.url.split('://')[1].toString().split('/')[0] : window.localDomainName;
         },
         //添加历史
-        addHistory:function(url)
-        {
+        addHistory: function (url) {
             //console.log(this);
             //console.log('');
-            var URL = url||this.url;
-            history.pushState({url:this.url},'',URL);
+            var URL = url || this.url;
+            history.pushState({url: this.url}, '', URL);
         },
 
         //解析a标签，如果a标签href是路径的话则替换为jRouter的函数
 
         //跳转
-        redirect : function(para_mode,isReplace)
-        {
-            var mode = para_mode||'current';
-            if(mode=='current')
-            {
+        redirect: function (para_mode, isReplace) {
+            var mode = para_mode || 'current';
+            if (mode == 'current') {
                 //判断是否为外部链接
-                if(this.domainName==window.localDomainName)
-                {//本地链接
-                    if(isReplace!=true){
+                if (this.domainName == window.localDomainName) {//本地链接
+                    if (isReplace != true) {
                         this.addHistory();
                     }
                     //alert(this.url);
@@ -93,8 +85,7 @@
                     this.initWindow(currentPageRouter.initDomFunction);
                     //this.clearDisappearClass();
                 }
-                else
-                {
+                else {
                     location.href = jRouter.url;
                 }
                 //this.jumpAnimation(function()
@@ -114,51 +105,43 @@
                 //
                 //});
             }
-            else
-            {
+            else {
                 this.jumpAnimation(
-                    function()
-                    {
+                    function () {
                         window.open(this.url);
                     });
             }
         },
         //跳转动画
-        jumpAnimation : function(para_callback)
-        {
+        jumpAnimation: function (para_callback) {
             document.getElementsByClassName('full-screen')[0].classList.add('moving-disappear-animate');
-            var callback = para_callback||function()
-                {
+            var callback = para_callback || function () {
                     return false;
                 };
             var _jRouter = this;
             setTimeout(
-                function()
-                {
+                function () {
                     _jRouter.c = callback;
                     _jRouter.c(_jRouter.url);
                 }
 
-            , 500);
+                , 500);
         },
-        Controllers:{},
-        ControllerList:[],
-        Models:{},
-        ModelTemplates:[],
-        RouterRules:{}
+        Controllers: {},
+        ControllerList: [],
+        Models: {},
+        ModelTemplates: [],
+        RouterRules: {}
     };
 
 
-
     //对HTML5的history API兼容性检查
-    jRouter.fn.isSupportsHistoryApi = function()
-    {
+    jRouter.fn.isSupportsHistoryApi = function () {
         return !!(window.history && history.pushState);
     };
 
     //检查浏览器版本
-    jRouter.fn.getBrowserInfo = function()
-    {
+    jRouter.fn.getBrowserInfo = function () {
         var Sys = {};
         var ua = navigator.userAgent.toLowerCase();
         var s;
@@ -169,21 +152,20 @@
                         (s = ua.match(/version\/([\d.]+).*safari/)) ? Sys.safari = s[1] : 0;
 
         if (Sys.ie) return ['IE', Sys.ie];
-        if (Sys.firefox) return['Firefox', Sys.firefox];
-        if (Sys.chrome) return['Chrome', Sys.chrome];
-        if (Sys.opera) return['Opera', Sys.opera];
-        if (Sys.safari) return['Safari', Sys.safari];
-        else return['IE', 11];
+        if (Sys.firefox) return ['Firefox', Sys.firefox];
+        if (Sys.chrome) return ['Chrome', Sys.chrome];
+        if (Sys.opera) return ['Opera', Sys.opera];
+        if (Sys.safari) return ['Safari', Sys.safari];
+        else return ['IE', 11];
     };
     //初始化页面结构的外部函数的存储
-    jRouter.fn.initDomFunction = function(){};
+    jRouter.fn.initDomFunction = function () {
+    };
 
     //初始化页面
-    jRouter.fn.initWindow = function(setNavfun)
-    {
+    jRouter.fn.initWindow = function (setNavfun) {
         jRouter.fn.clearDisappearClass();
-        if(typeof setNavfun=="function")
-        {
+        if (typeof setNavfun == "function") {
             setNavfun();
         }
 
@@ -191,55 +173,47 @@
     };
 
     //清除滑出动画类
-    jRouter.fn.clearDisappearClass = function()
-    {
-        document.getElementsByClassName('full-screen')[0].className='full-screen';
+    jRouter.fn.clearDisappearClass = function () {
+        document.getElementsByClassName('full-screen')[0].className = 'full-screen';
     };
 
     //添加化入动画类
-    jRouter.fn.addShowingClass = function()
-    {
+    jRouter.fn.addShowingClass = function () {
         document.getElementsByClassName('full-screen')[0].classList.add('moving-show-animate');
     };
 
     //设置初始化页面的函数
-    jRouter.fn.setInitDomFunction = function(fun)
-    {
+    jRouter.fn.setInitDomFunction = function (fun) {
         this.initDomFunction = fun;
     };
 
     //获得当前页面的路由
-    jRouter.currentPagejRouter = jRouter.fn.currentPagejRouter = function()
-    {
+    jRouter.currentPagejRouter = jRouter.fn.currentPagejRouter = function () {
         return window.currentPagejRouter;
     };
 
     //设定controller
-    jRouter.setRouter = jRouter.fn.setRouter = function(argObj)
-    {
-        var variableName = argObj.type+argObj.name+'Controller';
+    jRouter.setRouter = jRouter.fn.setRouter = function (argObj) {
+        var variableName = argObj.type + argObj.name + 'Controller';
         jRouter.prototype.Controllers[variableName] = argObj.fun[0];
-        if(jRouter.prototype.ControllerList.indexOf(argObj.url) == -1){ //没有则添加，表示一开始每天加打开ControllerList被数组规模吓得半死
+        if (jRouter.prototype.ControllerList.indexOf(argObj.url) == -1) { //没有则添加，表示一开始每天加打开ControllerList被数组规模吓得半死
             jRouter.prototype.ControllerList.push(
                 {
-                    url:argObj.url,
-                    controllerFunction:argObj.fun[0]
+                    url: argObj.url,
+                    controllerFunction: argObj.fun[0]
                 }
             );
         }
 
     };
     //选取controller
-    jRouter.getControllerByUrl = jRouter.fn.getControllerByUrl = function(url)
-    {
-        if(url==null||url=='')
-        {
+    jRouter.getControllerByUrl = jRouter.fn.getControllerByUrl = function (url) {
+        if (url == null || url == '') {
             console.error('url地址不能为空');
             return false;
         }
-        else{
-            for( var i =0;i<jRouter.prototype.ControllerList.length;i++)
-            {
+        else {
+            for (var i = 0; i < jRouter.prototype.ControllerList.length; i++) {
                 //var x = jRouter(url).getUrlParam().params[0];
                 //console.log(x);
                 //这种抓取方法仅适用于本站的路径规则，既所有路径都在根路径之后，并且
@@ -251,78 +225,71 @@
                 var url = new RegExp('.html').test(url) ? url.split('.html')[0] : url;
                 var urlPara = jRouter.getUrlParam(url).params;
                 var controllerUrl = '';
-                if(urlPara.length>1){
-                    controllerUrl = urlPara[urlPara.length-2];//最后一项为参数项，获取前一项即为控制器的名称
+                if (urlPara.length > 1) {
+                    controllerUrl = urlPara[urlPara.length - 2];//最后一项为参数项，获取前一项即为控制器的名称
                 }
-                else if(urlPara.length == 1){
-                    controllerUrl = urlPara[urlPara.length-1];
+                else if (urlPara.length == 1) {
+                    controllerUrl = urlPara[urlPara.length - 1];
                 }
-                else{
+                else {
                     controllerUrl = 'index';
                 }
-                if(jRouter.prototype.ControllerList[i].url== ('/'+controllerUrl+'/') )
-                {
-                    return [jRouter.prototype.ControllerList[i].controllerFunction,i];
+                if (jRouter.prototype.ControllerList[i].url == ('/' + controllerUrl + '/')) {
+                    return [jRouter.prototype.ControllerList[i].controllerFunction, i];
                 }
             }
         }
         return false;
     };
     //将URL切片去掉.html后缀后返回参数
-    jRouter.getUrlParam =  jRouter.fn.getUrlParam = function(path)
-    {
+    jRouter.getUrlParam = jRouter.fn.getUrlParam = function (path) {
         var res = new Object();
         var protocolTester = new RegExp('http?:');
         var path = path || window.location.href;
 
-        res.protocol = protocolTester.test(path)?protocolTester.exec(path)[0]:'';
+        res.protocol = protocolTester.test(path) ? protocolTester.exec(path)[0] : '';
 
         res.domainName = protocolTester.test(path) ? path.split('://')[1].toString().split('/')[0] : window.localDomainName;
         var params = path.split('.html')[0].split('/');
         res.params = [];
-        for(var i=0; i< params.length; i++)
-        {
+        for (var i = 0; i < params.length; i++) {
             //删除参数
-            if(params[i]!=(res.protocol) && params[i]!=res.domainName && params[i]!='' )
-            {
+            if (params[i] != (res.protocol) && params[i] != res.domainName && params[i] != '') {
                 res.params.push(params[i]);
             }
         }
         return res;
     };
 
-    jRouter.initPage =jRouter.prototype.initPage = function(isReplace){
+    jRouter.initPage = jRouter.prototype.initPage = function (isReplace) {
         var params = this.getUrlParam().params;
         var childUrl;
-        if(params.length==0){
+        if (params.length == 0) {
             childUrl = jRouter.prototype.root;
         }
-        else{
-            childUrl = '/'+params[0]+'/';
+        else {
+            childUrl = '/' + params[0] + '/';
         }
         var fun = jRouter.getControllerByUrl(childUrl)[0];
-        if(typeof fun =='function')
-        {
+        if (typeof fun == 'function') {
             //todo 添加路径参数
             //console.log(this.url);
-            if(isReplace=='replace'){
+            if (isReplace == 'replace') {
                 fun(true);
             }
-            else{
+            else {
                 fun();
             }
         }
 
 
-
     };
 
-    jRouter.resumeState = function(){
+    jRouter.resumeState = function () {
 
     };
     //试验用，此功能已解耦，转移到Model类
-    jRouter.loadTemplate = jRouter.fn.loadTemplate = function()
-    {
+    jRouter.loadTemplate = jRouter.fn.loadTemplate = function () {
         var path = 'user.html';
         ajax.send(
             {
@@ -330,16 +297,14 @@
                 data: null,
                 type: "GET",
                 dataType: "html",
-                success: function(Template)
-                {
+                success: function (Template) {
                     jRouter.prototype.ModelTemplates.push(Template);
                 }
             }
         );
     };
     //试验用，此功能已解耦，转移到Model类
-    jRouter.loadModelData = jRouter.fn.loadModelData = function()
-    {
+    jRouter.loadModelData = jRouter.fn.loadModelData = function () {
         var path = '../JSON/get_user.json';
         ajax.send(
             {
@@ -347,11 +312,9 @@
                 data: null,
                 type: "GET",
                 dataType: "json",
-                success: function(data)
-                {
-                    if(data.status==1)
-                    {
-                        $('#banner').html( nanoRenderer(jRouter.prototype.ModelTemplates[0],data));
+                success: function (data) {
+                    if (data.status == 1) {
+                        $('#banner').html(nanoRenderer(jRouter.prototype.ModelTemplates[0], data));
                     }
                 }
             }
@@ -359,83 +322,71 @@
     };
 
     //载入model
-    jRouter.Model = jRouter.prototype.Model = function(name,fun)
-    {
-        eval('jRouter.prototype.Models.'+name+' = '+fun.toString()+';');
+    jRouter.Model = jRouter.prototype.Model = function (name, fun) {
+        eval('jRouter.prototype.Models.' + name + ' = ' + fun.toString() + ';');
     };
 
     jRouter.Models = jRouter.prototype.Models;
 
     //解析a标签，支持多种参数传递，包括无参、节点数组、节点
-    jRouter.parseAnchor = function(Anchor)
-    {
+    jRouter.parseAnchor = function (Anchor) {
         //这个函数可以接收一个参数Anchor来解析指定的a标签
 
-        if(Anchor == null || typeof Anchor == "undefined")
-        {
+        if (Anchor == null || typeof Anchor == "undefined") {
             var Anchors = document.getElementsByTagName('a');//遍历DOM找到所有a标签
         }
-        else if(Anchor instanceof Array || Anchor instanceof HTMLCollection || Anchor instanceof NodeList)//getElementsBy* 返回类型需要注意 todo safari下是NodeList 但是chrome是 HTMLCollection
+        else if (Anchor instanceof Array || Anchor instanceof HTMLCollection || Anchor instanceof NodeList)//getElementsBy* 返回类型需要注意 todo safari下是NodeList 但是chrome是 HTMLCollection
         {   //如果是节点数组的话
             var Anchors = Anchor;
         }
-        else{
+        else {
             //如果是节点的话,包装成节点的数组
             var Anchors = [Anchor];
         }
         //然后开心地调用咯
         var temp;
-        for(var i = 0; i<Anchors.length; i++)
-        {
+        for (var i = 0; i < Anchors.length; i++) {
             //找到a标签的链接地址
             temp = Anchors[i].getAttribute("href");
-            if(temp!=null && temp.length>0)
-            {
-                if(temp[0]!='#' && temp.indexOf('javascript:')==-1 && Anchors[i].getAttribute('target')!='_blank')//
+            if (temp != null && temp.length > 0) {
+                if (temp[0] != '#' && temp.indexOf('javascript:') == -1 && Anchors[i].getAttribute('target') != '_blank')//
                 {
-                    var target = Anchors[i].getAttribute('target')=='_blank' ? 'new' : 'current';
+                    var target = Anchors[i].getAttribute('target') == '_blank' ? 'new' : 'current';
                     var fun = jRouter.fn.getControllerByUrl(temp);
-                    if(fun)
-                    {
+                    if (fun) {
                         //console.log(temp);
                         var functionLocation = fun[1];
-                        Anchors[i].setAttribute('data-controller',functionLocation);//在标签中记录
-                        Anchors[i].setAttribute('data-href',temp);
+                        Anchors[i].setAttribute('data-controller', functionLocation);//在标签中记录
+                        Anchors[i].setAttribute('data-href', temp);
                         Anchors[i].removeAttribute('href');
-                        Anchors[i].addEventListener('click',function(){
+                        Anchors[i].addEventListener('click', function () {
                             var functionLocation = parseInt(this.getAttribute('data-controller'));
                             var url = this.getAttribute('data-href');//href暂存
                             var fun = jRouter.prototype.ControllerList[functionLocation].controllerFunction;
-                            fun(false,url);
+                            fun(false, url);
                         });
 
 
                     }
-                    else
-                    {
-                        var str = "javascript:"+"jRouter('"+temp+"').redirect('"+target+"')";
-                        Anchors[i].setAttribute("href",str);
+                    else {
+                        var str = "javascript:" + "jRouter('" + temp + "').redirect('" + target + "')";
+                        Anchors[i].setAttribute("href", str);
                     }
 
                 }
             }
         }
     };
-    jRouter.parseTemplateElment = function(templatename)
-    {
+    jRouter.parseTemplateElment = function (templatename) {
         //若templatename为空的话就扫描文档中所有的template
-        if(templatename==null)
-        {
+        if (templatename == null) {
             var templateElements = document.getElementsByClassName('jRouter-template');
         }
-        else
-        {
-            var templateElements = document.querySelectorAll('div [data-template-model="'+templatename+'"]');
+        else {
+            var templateElements = document.querySelectorAll('div [data-template-model="' + templatename + '"]');
         }
-        if(templateElements.length>0)
-        {
-            for(var i= 0; i< templateElements.length; i++)
-            {
+        if (templateElements.length > 0) {
+            for (var i = 0; i < templateElements.length; i++) {
                 //var template
             }
         }
@@ -444,15 +395,14 @@
     //设定路由状态
     //这些状态包含:title,paraList,action;
     //唯一标识为path
-    jRouter.setRouterStates = function(arg){
+    jRouter.setRouterStates = function (arg) {
         jRouter.prototype.RouterRules = arg;
     };
     //TODO
     //查找路由规则,利用正则字符串匹配
-    jRouter.queryRouterRules = function(url){
+    jRouter.queryRouterRules = function (url) {
 
     };
-
 
 
     //原型
@@ -461,15 +411,12 @@
     window.jRouter = jRouter;
 
 
-
 })(window.location.href);
 
 /* Nano Templates - https://github.com/trix/nano */
-function nanoRenderer(template, data)
-{
+function nanoRenderer(template, data) {
     return template.replace(/\{([\w\.]*)\}/g,
-        function(str, key)
-        {
+        function (str, key) {
             var keys = key.split("."), v = data[keys.shift()];
             for (var i = 0, l = keys.length; i < l; i++) v = v[keys[i]];
             return (typeof v !== "undefined" && v !== null) ? v : "";

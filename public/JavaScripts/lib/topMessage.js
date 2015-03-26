@@ -7,13 +7,12 @@
 //    Message:'here is your message',
 //    Type : 'success'/'fail'/'warning'/'normal'
 //}
-function topMessage(arg)
-{
+function topMessage(arg) {
 
-    this.TypesArray = ['success','fail','warning','normal'];
-    this.TypeStylesArray = ['Top-Message-success','Top-Message-fail','Top-Message-warning','Top-Message-normal'];
+    this.TypesArray = ['success', 'fail', 'warning', 'normal'];
+    this.TypeStylesArray = ['Top-Message-success', 'Top-Message-fail', 'Top-Message-warning', 'Top-Message-normal'];
 
-    this.Type = this.TypesArray.indexOf(arg.Type||'normal');
+    this.Type = this.TypesArray.indexOf(arg.Type || 'normal');
     this.Message = arg.Message;
 
     this.TypeStyle = this.TypeStylesArray[this.Type];
@@ -21,17 +20,15 @@ function topMessage(arg)
     this.entity = document.createElement('div');
     this.content = document.createTextNode(this.Message);
     this.entity.appendChild(this.content);
-    this.entity.setAttribute('class','Top-Message ' + this.TypeStyle);
+    this.entity.setAttribute('class', 'Top-Message ' + this.TypeStyle);
 
     this.closeElement = document.createElement('div');
     //this.closeElement.innerHTML = '×';
     this.entity.appendChild(this.closeElement);
 
-    window.removeAllMessages = function()
-    {
+    window.removeAllMessages = function () {
         var topMessageArray = document.getElementsByClassName('Top-Message');
-        for(var i = 0; i < topMessageArray.length; i++)
-        {
+        for (var i = 0; i < topMessageArray.length; i++) {
             document.body.removeChild(topMessageArray[i]);
         }
     };
@@ -43,10 +40,15 @@ function topMessage(arg)
 
 
     //绑定点击关闭事件
-    this.closeElement.addEventListener('click',function(){
-        document.body.removeChild(this.parentNode);
+    this.closeElement.addEventListener('click', function () {
+        var t =this.parentNode;
+        document.body.removeChild(t);
 
     });
+    var _this= this;
+    setTimeout(function(){
+        removeAllMessages();
+    },3000);
 
     //
     return this;

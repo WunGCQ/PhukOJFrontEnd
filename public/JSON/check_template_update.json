@@ -1,13 +1,14 @@
 {
-  "status":1,
-  "versionInfo":{
-    "http://localhost:63342/github/ngtest/public/templates/user.html": "6.60c",
-    "http://localhost:63342/github/ngtest/public/templates/problem.html": "6.61b",
-    "http://localhost:63342/github/ngtest/public/templates/groupList.html": "6.62b",
-    "http://localhost:63342/github/ngtest/public/templates/contestProblemList.html": "6.61c",
-    "http://localhost:63342/github/ngtest/public/templates/contestList.html": "6.61e",
-    "http://localhost:63342/github/ngtest/public/templates/contest.html": "6.61d",
-    "http://localhost:63342/github/ngtest/public/templates/group.html": "6.61c",
-    "http://localhost:63342/github/ngtest/public/templates/membership.html": "6.62"
+  "code": 1,
+  "versionInfo": {
+    "http://localhost:8080/templates/user.html": "6.60c",
+    "http://localhost:8080/templates/problem.html": "6.61c",
+    "http://localhost:8080/templates/groupList.html": "6.63b",
+    "http://localhost:8080/templates/contestProblemList.html": "6.61c",
+    "http://localhost:8080/templates/contestList.html": "6.61e",
+    "http://localhost:8080/templates/contest.html": "6.61d",
+    "http://localhost:8080/templates/group.html": "6.61c",
+    "http://localhost:8080/templates/membership.html": "6.62",
+    "http://localhost:8080/templates/createGroup.html": "6.60"
   }
 }

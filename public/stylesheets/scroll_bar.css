@@ -1,7 +1,7 @@
 .scroll-bar-track {
     display: block;
     position: absolute;
-    top:0;
+    top: 0;
     right: 6px;
     width: 6px;
     height: 100%;
@@ -9,6 +9,7 @@
     background-color: rgba(0, 0, 0, .15);
     z-index: 999;
 }
+
 .scroll-bar {
     display: block;
     position: relative;

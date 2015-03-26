@@ -1,8 +1,8 @@
 .Top-Message {
     display: block;
     position: fixed;
-    left:0;
-    top:0;
+    left: 0;
+    top: 0;
     width: 100%;
     height: 36px;
     font-size: 16px;
@@ -12,30 +12,35 @@
     line-height: 35px;
     text-indent: 3em;
     z-index: 9999999;
-    border:1px solid rgba(255, 255, 255, .5);
+    border: 1px solid rgba(255, 255, 255, .5);
 
-    animation:  0.5s show-top-message ease forwards, 2s 0.5s breath ease infinite;
-    -moz-animation:  0.5s show-top-message ease forwards, 2s 0.5s breath ease infinite;
-    -webkit-animation:  0.5s show-top-message ease forwards, 2s 0.5s breath ease infinite;
+    animation: 0.5s show-top-message ease forwards, 2s 0.5s breath ease infinite;
+    -moz-animation: 0.5s show-top-message ease forwards, 2s 0.5s breath ease infinite;
+    -webkit-animation: 0.5s show-top-message ease forwards, 2s 0.5s breath ease infinite;
     -ms-animation: 0.5s show-rop-message ease forwards, 2s 0.5s breath ease infinite;
 }
+
 .Top-Message-success {
     background-color: #27ae60;
 }
+
 .Top-Message-fail {
     background-color: #e74c3c;
 }
+
 .Top-Message-warning {
     background-color: #e67e22;
 }
+
 .Top-Message-normal {
     background-color: #3498db;
 }
+
 /**/
 .Top-Message div {
     display: block;
     position: absolute;
-    top:3px;
+    top: 3px;
     right: 30px;
     width: 30px;
     height: 30px;
@@ -47,6 +52,7 @@
     line-height: 26px;
     transition: all ease 0.5s;
 }
+
 .Top-Message div:after {
     content: '×';
     display: block;
@@ -54,38 +60,71 @@
     line-height: 27px;
     left: -42px;
 }
+
 .Top-Message div:hover {
-    transform:rotate(90deg);
+    transform: rotate(90deg);
 }
-
-
 
 @keyframes show-top-message {
-    from { opacity: 0; }
-    to {opacity: 1; }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
+
 @-moz-keyframes show-top-message {
-    from {opacity: 0; }
-    to {opacity: 1; }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
+
 @-webkit-keyframes show-top-message {
-    from {  opacity: 0;  }
-    to {  opacity: 1;  }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes breath {
-    0% { opacity: 0.9; }
-    50% {opacity: 1}
-    100% {opacity: 0.9; }
+    0% {
+        opacity: 0.9;
+    }
+    50% {
+        opacity: 1
+    }
+    100% {
+        opacity: 0.9;
+    }
 }
+
 @-moz-keyframes breath {
-    0% { opacity: 0.9; }
-    50% {opacity: 1}
-    100% {opacity: 0.9; }
+    0% {
+        opacity: 0.9;
+    }
+    50% {
+        opacity: 1
+    }
+    100% {
+        opacity: 0.9;
+    }
 }
+
 @-webkit-keyframes breath {
-    0% { opacity: 0.9; }
-    50% {opacity: 1}
-    100% {opacity: 0.9; }
+    0% {
+        opacity: 0.9;
+    }
+    50% {
+        opacity: 1
+    }
+    100% {
+        opacity: 0.9;
+    }
 }
 

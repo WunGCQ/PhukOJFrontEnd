@@ -34,6 +34,8 @@
     <script src="../JavaScripts/lib/jRouter.js"></script>
     <!--smalljq-->
     <script src="../JavaScripts/lib/iPtdqx.js"></script>
+    <!--jq-->
+    <script src="../JavaScripts/lib/jquery-1.10.0.js"></script>
     <!--cookie-->
     <script src="../JavaScripts/lib/cookie.js"></script>
     <!--ajax-->
@@ -44,6 +46,8 @@
     <script src="../JavaScripts/Controllers/RouteController.js"></script>
     <!--juicer模板引擎-->
     <script src="../JavaScripts/lib/juicer.js"></script>
+
+
 </head>
 <body>
 <div class="full-screen moving-show-animate">
@@ -70,12 +74,15 @@
             <i></i>
         </a>
 
-            <ul class="nav-item unlog" id="user-bar" onmouseover="(function(){if(document.getElementById('user-bar').classList.contains('log')){document.getElementById('user-nav').classList.add('show-menu-animate');}})();"onmouseleave="document.getElementById('user-nav').classList.remove('show-menu-animate');" onblur="document.getElementById('user-nav').classList.remove('show-menu-animate');">
+            <ul class="nav-item unlog" id="user-bar"
+                onmouseover="(function(){if(document.getElementById('user-bar').classList.contains('log')){document.getElementById('user-nav').classList.add('show-menu-animate');}})();"
+                onmouseleave="document.getElementById('user-nav').classList.remove('show-menu-animate');"
+                onblur="document.getElementById('user-nav').classList.remove('show-menu-animate');">
                 <li class="user-btn"><a>我</a></li>
                 <li class="login-btn"><a href="/login/">登录</a></li>
                 <li class="register-btn"><a href="/register/">注册</a></li>
                 <i></i>
-                <ul id="user-nav" class="sub-nav" >
+                <ul id="user-nav" class="sub-nav">
                     <li>
                         <a class="user-name" href="/user/">用户名</a>
                     </li>
@@ -90,11 +97,11 @@
             <a id="time-wrapper">
                 <span id="time-now"></span>
                 <script>
-                    (function showTimeOnHeader(){
-                        setInterval(function(){
+                    (function showTimeOnHeader() {
+                        setInterval(function () {
                             var timeNow = new Date().toLocaleString();
                             document.getElementById("time-now").innerHTML = timeNow;
-                        },1000);
+                        }, 1000);
                     })();
                 </script>
             </a>
@@ -107,39 +114,39 @@
                 <a href=""></a>
             </div>
             <!--题目列表模块-->
-            <div id="problem-list-section" class="main-blocks" >
+            <div id="problem-list-section" class="main-blocks">
                 题目列表
             </div>
             <!--题目信息模块，包含了讨论-->
-            <div id="problem-section" class="main-blocks" >
+            <div id="problem-section" class="main-blocks">
                 题目信息
             </div>
             <!--小组列表模块-->
-            <div id="group-list-section" class="main-blocks" >
+            <div id="group-list-section" class="main-blocks">
                 小组列表模块
             </div>
             <!--小组信息模块，包含了小组的管理-->
-            <div id="group-section" class="main-blocks" >
+            <div id="group-section" class="main-blocks">
                 小组信息模块
             </div>
             <!--比赛列表模块-->
-            <div id="contest-list-section" class="main-blocks" >
+            <div id="contest-list-section" class="main-blocks">
                 比赛列表
             </div>
             <!--比赛board，实时排名模块-->
-            <div id="contest-board-section" class="main-blocks" >
+            <div id="contest-board-section" class="main-blocks">
                 比赛board
             </div>
             <!--比赛提交列表模块，显示比赛中所有的提交及其状况-->
-            <div id="contest-submissions-section" class="main-blocks" >
+            <div id="contest-submissions-section" class="main-blocks">
                 比赛提交
             </div>
             <!--题目提交列表，包含了该题目历史上所有的提交-->
-            <div id="problem-submission-section" class="main-blocks" >
+            <div id="problem-submission-section" class="main-blocks">
                 题目提交列表
             </div>
             <!--比赛信息模块，包含了题目列表，比赛说明，出题小组等内容-->
-            <div id="contest-section" class="main-blocks" >
+            <div id="contest-section" class="main-blocks">
                 比赛信息
             </div>
             <!--消息模块-->
@@ -150,6 +157,9 @@
             <div id="search-section" class="main-blocks">
                 搜索结果
             </div>
+            <div id="create-group-section" class="main-blocks">
+
+            </div>
 
         </div>
     </div>
@@ -158,8 +168,7 @@
 
 <!--<h1>BUAA 在线评测系统</h1>-->
 <script>
-    window.onload = function()
-    {
+    window.onload = function () {
         //window.UI_animate = new UI_Animate();
         window.currentPagejRouter = jRouter(window.location.href);
         setRouteController();
@@ -172,7 +181,7 @@
 
 
     };
-    window.addEventListener('popstate', function(e) {
+    window.addEventListener('popstate', function (e) {
         if (e.state) {
             console.log(e.state);
             setActiveLink();
@@ -186,21 +195,15 @@
     });
 
 
-
-
-
-
-
-
 </script>
 
 
-<!--jq-->
-<script src="../JavaScripts/lib/jquery-1.10.0.js"></script>
+
 <script src="../JavaScripts/Models/Model.js"></script>
 </body>
 <div id="login-window" class="modal-background">
     <h1 class="modal-oj-title">Online Judge 4th</h1>
+
     <div class="left-intro">
         <img src="../images/intro2.png" width="200" alt=""/>
         <!--<img src="../images/mail.png" width="100" alt=""/>-->
@@ -210,8 +213,10 @@
     <div class="modal-window">
         <div class="modal-content">
             <form>
-                <input type="text" name="username" placeholder="用户名" required="required"/><span class="fa fa-user"></span>
-                <input type="password" name="password" class="" placeholder="密码" required="required"/><span class="fa fa-lock"></span>
+                <input type="text" name="username" placeholder="用户名" required="required"/><span
+                    class="fa fa-user"></span>
+                <input type="password" name="password" class="" placeholder="密码" required="required"/><span
+                    class="fa fa-lock"></span>
             </form>
             <a class="button submit" tabindex="0">登录</a>
             <a href="/register/" class="register-link flat-link">前往注册~</a>
@@ -224,6 +229,7 @@
 
 <div id="register-window" class="modal-background">
     <h1 class="modal-oj-title">Online Judge 4th</h1>
+
     <div class="left-intro">
         <img src="../images/intro2.png" width="200" alt=""/>
         <!--<img src="../images/mail.png" width="100" alt=""/>-->
@@ -233,20 +239,26 @@
     <div class="modal-window">
         <div class="modal-content">
             <form>
-                <input type="text" name="username" placeholder="用户名 / 学号" required="required"/><span class="fa fa-user"></span>
-                <input type="text" name="nickname" placeholder="输入您的昵称" required="required"><span class="fa fa-info-circle"></span>
-                <input type="email" name="email" placeholder="邮件地址，用于找回密码" required="required"/><span class="fa fa-envelope"></span>
-                <input type="password" name="password" class="" placeholder="密码,字母开头,长度6至18位" required="required"/><span class="fa fa-lock"></span>
-                <input type="password" name="password_again" placeholder="重复一遍您的密码" required="required"/><span class="fa fa-lock"></span>
+                <input type="text" name="username" placeholder="用户名 / 学号" required="required"/><span
+                    class="fa fa-user"></span>
+                <input type="text" name="nickname" placeholder="输入您的昵称" required="required"><span
+                    class="fa fa-info-circle"></span>
+                <input type="email" name="email" placeholder="邮件地址，用于找回密码" required="required"/><span
+                    class="fa fa-envelope"></span>
+                <input type="password" name="password" class="" placeholder="密码,字母开头,长度6至18位" required="required"/><span
+                    class="fa fa-lock"></span>
+                <input type="password" name="password_again" placeholder="重复一遍您的密码" required="required"/><span
+                    class="fa fa-lock"></span>
             </form>
             <a class="button submit" tabindex="0">注册</a>
-            <a href="/login/"  class="flat-link">返回登陆</a>
+            <a href="/login/" class="flat-link">返回登陆</a>
             <a href="/index/" class="flat-link">回到主页</a>
         </div>
     </div>
 </div>
 <div id="forget-password-window" class="modal-background">
     <h1 class="modal-oj-title">Online Judge 4th</h1>
+
     <div class="left-intro">
         <img src="../images/intro2.png" width="200" alt=""/>
         <!--<img src="../images/mail.png" width="100" alt=""/>-->
@@ -255,15 +267,18 @@
     <div class="modal-window">
         <div class="modal-content">
             <form>
-                <input type="email" name="email" placeholder="您注册时填写的邮箱" required="required"/><span class="fa fa-envelope"></span>
+                <input type="email" name="email" placeholder="您注册时填写的邮箱" required="required"/><span
+                    class="fa fa-envelope"></span>
             </form>
             <a class="button submit" tabindex="0">发送邮件</a>
-            <a href="/login/"  class="flat-link">返回登陆</a>
+            <a href="/login/" class="flat-link">返回登陆</a>
             <a href="/index/" class="flat-link">回到主页</a>
         </div>
     </div>
 </div>
 
+<!--用户信息视图控制器-->
+<script src="../JavaScripts/Controllers/userInfoController.js"></script>
 
 <!--组件 顶端消息栏-->
 <script src="../JavaScripts/lib/topMessage.js"></script>
@@ -312,13 +327,15 @@
 <script src="../JavaScripts/Models/MembershipModel.js"></script>
 <!--小组视图控制器-->
 <script src="../JavaScripts/Controllers/membershipController.js"></script>
+<script src="../JavaScripts/Controllers/createGroupController.js"></script>
 
-<!--用户信息视图控制器-->
+
+
 <!--需要注意的是 这里script如果直接用模板转义之后的innerHTML注入是没有用的，
 本着不造与业务无关的复杂轮子的思想，直接使用jQuery的html()和append()来写入转换后的模板代码-->
-<script src="../JavaScripts/Controllers/userInfoController.js"></script>
+
 
 <!--引入datatable-->
-<script src="../JavaScripts/lib/datatable.js"></script>
+<!--<script src="../JavaScripts/lib/datatable.js"></script>-->
 <script src="../JavaScripts/lib/MD5.js"></script>
 </html>

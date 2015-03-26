@@ -8,8 +8,9 @@
     height: calc(100% - 100px);
     min-height: 580px;
     z-index: 5;
-    font-family:  Arial, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', '宋体', 宋体, Tahoma, Arial, Helvetica, STHeiti;
+    font-family: Arial, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', '宋体', 宋体, Tahoma, Arial, Helvetica, STHeiti;
 }
+
 #schedule-board-header {
     display: block;
     position: relative;
@@ -25,25 +26,29 @@
     -moz-user-select: none;
     user-select: none;
 }
-#schedule-board-header span,#schedule-board-header svg {
+
+#schedule-board-header span, #schedule-board-header svg {
     display: inline-block;
     vertical-align: top;
     position: relative;
     cursor: default;
 }
+
 #schedule-board-header svg {
     margin-left: 10px;
 }
-#schedule-board-header span{
+
+#schedule-board-header span {
     font-size: 24px;
     margin-left: -15px;
     color: #0F0A0E;
 }
+
 #schedule-board-title {
     display: block;
     position: relative;
     box-sizing: content-box;
-    margin:  0;
+    margin: 0;
     width: 100%;
     height: 70px;
     padding: 0;
@@ -65,6 +70,7 @@
     width: 52px;
     text-align: center;
 }
+
 #schedule-board-title .time-box {
     display: inline-block;
     vertical-align: top;
@@ -98,11 +104,13 @@
     margin-left: 10px;
     width: 100%;
 }
-#schedule-board-title tr>td:first-child {
+
+#schedule-board-title tr > td:first-child {
     width: 85px;
 }
+
 #schedule-board-title td {
-    color:#333;
+    color: #333;
     font-size: 16px;
     font-weight: normal;
 }
@@ -118,6 +126,7 @@
     opacity: 0.5;
     transition: opacity 0.5s;
 }
+
 #schedule-board-title a:hover {
     opacity: 1;
 }
@@ -132,16 +141,19 @@
     background-color: rgba(255, 255, 255, .15);
     overflow: hidden;
 }
+
 #schedule-board-list-box ul {
     display: block;
     width: 100%;
     height: auto;
 }
+
 #schedule-board-list-box li {
     display: block;
     width: 100%;
     height: 55px;
 }
+
 #schedule-board-list-box .time-box {
     display: inline-block;
     vertical-align: top;
@@ -165,20 +177,23 @@
     /*float: right;*/
     cursor: default;
 }
+
 #schedule-board-list-box .schedule-name-wrapper {
     display: inline-block;
     vertical-align: top;
     width: 165px;
     height: 100%;
 }
+
 #schedule-board-list-box .schedule-name-box {
     display: table;
     vertical-align: middle;
     width: 100%;
     height: 100%;
-    color:#333;
+    color: #333;
     font-size: 16px;
 }
+
 #schedule-board-list-box .schedule-name-box span {
     display: table-cell;
     vertical-align: middle;
@@ -186,30 +201,35 @@
     padding-left: 15px;
     font-weight: 600;
 }
+
 #schedule-board-list-box .schedule-detail-box {
     display: inline-block;
     vertical-align: top;
     height: 100%;
     width: 160px;
 }
-#schedule-board-list-box .schedule-detail-box>div{
-    display:inline-block;
+
+#schedule-board-list-box .schedule-detail-box > div {
+    display: inline-block;
     vertical-align: top;
     font-size: 14px;
-    color:#333;
+    color: #333;
     height: 50%;
 }
+
 #schedule-board-list-box .teacher-info {
     width: 100%;
     line-height: 30px;
-    padding-left:5px;
+    padding-left: 5px;
 }
+
 #schedule-board-list-box .classroom-info {
     width: 60%;
     padding-left: 5px;
 }
+
 #schedule-board-list-box .fa {
-    color:#fff;
+    color: #fff;
     font-size: 14px;
     margin-right: 3px;
 }
@@ -233,14 +253,15 @@
     cursor: pointer;
     transition: transform 0.5s, -moz-transform 0.5s, -webkit-transform 0.5s, -ms-transform 0.5s, opacity 0.3s, border-color 0.3s;
 }
+
 #add-schedule:hover {
     text-decoration: none;
     opacity: 0.8;
-    border-color: rgba(255,255,255,0.6);
-    transform:rotate(90deg);
-    -moz-transform:rotate(90deg);
-    -webkit-transform:rotate(90deg);
-    -ms-transform:rotate(90deg);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
 }
 
 #schedule-board-user-bar {
@@ -252,6 +273,7 @@
     /*background-color: rgba(255, 255, 255, .1);*/
     border-radius: 0 0 3px 3px;
 }
+
 #schedule-board-user-bar .gradient-bg {
     display: block;
     position: absolute;
@@ -261,11 +283,12 @@
     width: 100%;
     height: 52px;
     opacity: 0.2;
-    background: -webkit-linear-gradient(top,#4b98e3, #8d90aa);
-    background: -ms-linear-gradient(top,#4b98e3, #8d90aa);
-    background: -moz-linear-gradient(top,#4b98e3, #8d90aa);
+    background: -webkit-linear-gradient(top, #4b98e3, #8d90aa);
+    background: -ms-linear-gradient(top, #4b98e3, #8d90aa);
+    background: -moz-linear-gradient(top, #4b98e3, #8d90aa);
     border-radius: 0 0 5px 5px;
 }
+
 #schedule-board-user-bar .user-head-box {
     display: inline-block;
     position: relative;
@@ -276,6 +299,7 @@
     z-index: 15;
     cursor: pointer;
 }
+
 .user-head-box img {
     width: 100%;
     height: 100%;
@@ -283,10 +307,11 @@
     z-index: 15;
 
 }
+
 #is-online {
     display: block;
     position: absolute;
-    left:63px;
+    left: 63px;
     top: 5px;
     width: 8px;
     height: 8px;
@@ -296,13 +321,14 @@
     cursor: pointer;
     z-index: 5;
 }
+
 #schedule-board-user-bar .up-box, #schedule-board-user-bar .comment-box {
     margin-left: 10px;
     margin-bottom: 10px;
     color: #fff;
 }
 
-#user-bar-could-icon,#user-bar-message-icon {
+#user-bar-could-icon, #user-bar-message-icon {
     display: inline-block;
     position: relative;
     vertical-align: bottom;
@@ -310,35 +336,32 @@
     margin-right: 18px;
     z-index: 15;
     font-size: 30px;
-    color:#fff;
+    color: #fff;
     opacity: 0.4;
     float: right;
     transition: opacity 0.5s;
 }
+
 #user-bar-message-icon {
     margin-top: 7px;
 }
-#user-bar-could-icon:hover ,#user-bar-message-icon:hover {
+
+#user-bar-could-icon:hover, #user-bar-message-icon:hover {
     opacity: 1;
 }
-
-
-
-
 
 #create-new-schedule-control {
     background-color: #4b98e3;
 }
 
-
-
-
 .color1 {
     background-color: #98C5FF;
 }
+
 .color2 {
     background-color: #6ED4C6;
 }
+
 .color3 {
     background-color: #69CCE9;
 }

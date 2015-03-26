@@ -4,6 +4,7 @@ html {
     width: 100%;
     height: 100%;
 }
+
 body {
     position: absolute;
     width: 100%;
@@ -17,7 +18,6 @@ body {
     /*background-size: 100% 100%;*//*  Firefox 4.0 and other CSS3-compliant browsers */
     /*-moz-border-image: url('../images/index_bg.jpg') 0; *//* Firefox 3.5 */
     /*filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/index_bg.jpg', sizingMethod='scale');*/
-
 
 }
 
@@ -34,6 +34,7 @@ body {
 
     /*background-color: brown;*/
 }
+
 * {
     /*box-shadow: 0 0 2px #000;*/
 }
@@ -46,16 +47,20 @@ body {
     font-size: 13px;
     z-index: 15;
 }
-.up-box .fa, .comment-box .fa{
+
+.up-box .fa, .comment-box .fa {
     font-size: 15px;
 }
+
 .up-box a, .comment-box a {
     text-decoration: none;
     color: inherit;
 }
-.up-box a:hover, .comment-box a:hover{
+
+.up-box a:hover, .comment-box a:hover {
     text-decoration: underline;
 }
+
 #left-control-wrapper {
     display: inline-block;
     position: relative;
@@ -63,6 +68,7 @@ body {
     width: 385px;
     height: 100%;
 }
+
 /*右边卡片的包裹box*/
 #water_fall_wrapper {
     display: inline-block;
@@ -75,6 +81,7 @@ body {
     margin-left: 10px;
     transition: height 0.3s ease, width 0.3s ease;
 }
+
 .card-row {
     display: block;
     vertical-align: top;
@@ -90,7 +97,7 @@ body {
 
 }
 
-#scroll-up,#scroll-down {
+#scroll-up, #scroll-down {
     display: block;
     position: absolute;
     color: #fff;
@@ -108,38 +115,39 @@ body {
     opacity: 0.6;
     transition: all ease 0.3s;
 }
+
 #scroll-up:hover, #scroll-down:hover {
     opacity: 1;
 
 }
+
 #scroll-down {
     bottom: 40%;
 }
 
 /*img{*/
-    /*background-color: #000;*/
+/*background-color: #000;*/
 /*}*/
 
 /*滚动条样式*/
 
-::-webkit-scrollbar
-{
+::-webkit-scrollbar {
     width: 10px;
     height: 6px;
 }
-::-webkit-scrollbar-track-piece
-{
+
+::-webkit-scrollbar-track-piece {
     background-color: #ccc;
     -webkit-border-radius: 0;
 }
-::-webkit-scrollbar-thumb:vertical
-{
+
+::-webkit-scrollbar-thumb:vertical {
     height: 5px;
     background-color: #999999;
     -webkit-border-radius: 6px;
 }
-::-webkit-scrollbar-thumb:horizontal
-{
+
+::-webkit-scrollbar-thumb:horizontal {
     width: 5px;
     background-color: #CCCCCC;
     -webkit-border-radius: 6px;
