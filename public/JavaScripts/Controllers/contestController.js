@@ -6,6 +6,7 @@ window.contestController = {};
 contestController.scopeBlock = document.getElementById("contest-section");
 //加载题目页面内容
 contestController.showContest = function (contest_id) {
+    var contest_id = contest_id || -1;
     if (window.currentContest == null) {
         window.currentContest = new ContestModel();
     }

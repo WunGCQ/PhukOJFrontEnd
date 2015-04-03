@@ -144,7 +144,13 @@ window.testSymbols = function (str) {
 };
 
 //转意符换成普通字符
-function escape2Html(str) {
-    var arrEntities={'lt':'<','gt':'>','nbsp':' ','amp':'&','quot':'"'};
-    return str.replace(/&(lt|gt|nbsp|amp|quot);/ig,function(all,t){return arrEntities[t];});
+function escape2Html(s){
+    return (typeof s != "string") ? s :
+        s.replace(this.REGX_HTML_ENCODE,
+            function($0){
+                var c = $0.charCodeAt(0), r = ["&#"];
+                c = (c == 0x20) ? 0xA0 : c;
+                r.push(c); r.push(";");
+                return r.join("");
+            });
 }

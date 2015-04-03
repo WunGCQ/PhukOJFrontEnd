@@ -28,7 +28,10 @@
     <link rel="stylesheet" href="../stylesheets/topMessage.css"/>
     <!--dataTable样式表-->
     <link rel="stylesheet" href="../stylesheets/jquery.dataTables.min.css"/>
-
+    <!--小组模块-->
+    <link rel="stylesheet" href="../stylesheets/group.css"/>
+    <!--markdown-->
+    <link rel="stylesheet" href="../stylesheets/markdown.css"/>
 
     <!--跳转-->
     <script src="../JavaScripts/lib/jRouter.js"></script>
@@ -36,8 +39,7 @@
     <script src="../JavaScripts/lib/iPtdqx.js"></script>
     <!--jq-->
     <script src="../JavaScripts/lib/jquery-1.10.0.js"></script>
-    <!--cookie-->
-    <script src="../JavaScripts/lib/cookie.js"></script>
+
     <!--ajax-->
     <script src="../JavaScripts/lib/ajax.min.js"></script>
     <!--模板的版本控制-->
@@ -47,6 +49,21 @@
     <!--juicer模板引擎-->
     <script src="../JavaScripts/lib/juicer.js"></script>
 
+    <!--cookie-->
+    <script src="../JavaScripts/lib/cookie.js"></script>
+    <!--用户信息视图控制器-->
+    <script src="../JavaScripts/Controllers/userInfoController.js"></script>
+
+    <!--组件 顶端消息栏-->
+    <script src="../JavaScripts/lib/topMessage.js"></script>
+    <!--注册控制器-->
+    <script src="../JavaScripts/Controllers/registerController.js"></script>
+    <!--登陆控制器-->
+    <script src="../JavaScripts/Controllers/loginController.js"></script>
+    <!--加载模型基类-->
+    <script src="../JavaScripts/Models/Model.js"></script>
+    <!--加载用户模型-->
+    <script src="../JavaScripts/Models/UserModel.js"></script>
 
 </head>
 <body>
@@ -157,6 +174,11 @@
             <div id="search-section" class="main-blocks">
                 搜索结果
             </div>
+            <!--添加题目-->
+            <div id="create-problem-section" class="main-blocks">
+
+            </div>
+            <!--添加赛事-->
             <div id="create-group-section" class="main-blocks">
 
             </div>
@@ -176,19 +198,19 @@
         //setActiveLink();
         currentPagejRouter.initPage();
         //TODO 向服务器取用户信息，取不到则设置参数为未登录的样式，取到的话创建用户对象
-        checkTemplateUpdate();
         UserModel.prototype.checkIsLogin();
-
+//        checkTemplateUpdate();
+        setActiveLink();
 
     };
     window.addEventListener('popstate', function (e) {
         if (e.state) {
-            console.log(e.state);
             setActiveLink();
             window.currentPagejRouter = jRouter(window.location.href);
             setRouteController();
             currentPagejRouter.initPage('replace');
             jRouter.parseAnchor();
+            UserModel.prototype.checkIsLogin();
 //
         }
         // 当然也可以直接使用history.state来获取当前对应的state数据。
@@ -276,20 +298,31 @@
         </div>
     </div>
 </div>
+<div id="progressing" class="modal-background" style="display: table;background-color: rgba(0,0,0, .5);display: none;">
+    <div id="progress-bar-wrapper" style="display: block;margin: auto;margin-top: calc(53vh - 12px);height:24px;width: 300px;background-color: rgba(255,255,255, .7);border-radius: 2px; ">
+        <div id="progress-bar" style="display:block; position: relative;left: 0;height: 24px; background-color:#2ecc71; width: 0%;border-radius:0 2px 2px 0; opacity: .8;text-align: right;font-size: 16px;min-width: 20px;color:#fff;line-height: 24px;padding-right: 5px;box-sizing: border-box;">
+            0
+        </div>
+        <script>
+            window.progressing = {};
+            window.progressing.percent = function(percentage){
+                $("#progress-bar").text(percentage).css("width",percentage+"%");
+                if(percentage>99.5){
+                    $("#progressing").hide();
+                    progressing.percent(0);
+                }
 
-<!--用户信息视图控制器-->
-<script src="../JavaScripts/Controllers/userInfoController.js"></script>
+            };
+            window.progressing.init = function(){
+                $("#progressing").show();
+                progressing.percent(0);
+            }
 
-<!--组件 顶端消息栏-->
-<script src="../JavaScripts/lib/topMessage.js"></script>
-<!--注册控制器-->
-<script src="../JavaScripts/Controllers/registerController.js"></script>
-<!--登陆控制器-->
-<script src="../JavaScripts/Controllers/loginController.js"></script>
-<!--加载模型基类-->
-<script src="../JavaScripts/Models/Model.js"></script>
-<!--加载用户模型-->
-<script src="../JavaScripts/Models/UserModel.js"></script>
+        </script>
+    </div>
+</div>
+
+
 
 <!--题目模块-->
 <!--加载题目列表模型-->
@@ -327,10 +360,16 @@
 <script src="../JavaScripts/Models/MembershipModel.js"></script>
 <!--小组视图控制器-->
 <script src="../JavaScripts/Controllers/membershipController.js"></script>
+<!--创建小组-->
 <script src="../JavaScripts/Controllers/createGroupController.js"></script>
-
-
-
+<!--小组题目控制器-->
+<script src="../JavaScripts/Controllers/groupProblemListController.js"></script>
+<!--小组比赛控制器-->
+<script src="../JavaScripts/Controllers/groupContestListController.js"></script>
+<!--添加小组题目控制器-->
+<script src="../JavaScripts/Controllers/createProblemController.js"></script>
+<!--添加小组比赛控制器-->
+<script src="../JavaScripts/Controllers/createContestController.js"></script>
 <!--需要注意的是 这里script如果直接用模板转义之后的innerHTML注入是没有用的，
 本着不造与业务无关的复杂轮子的思想，直接使用jQuery的html()和append()来写入转换后的模板代码-->
 
@@ -338,4 +377,5 @@
 <!--引入datatable-->
 <!--<script src="../JavaScripts/lib/datatable.js"></script>-->
 <script src="../JavaScripts/lib/MD5.js"></script>
+<script src="../JavaScripts/lib/marked.min.js"></script>
 </html>

@@ -18,7 +18,7 @@ problemListController.convertPageToSize = function (page) {
     return problemListController.start;
 };
 
-problemListController.showProblemList = function (page) {
+problemListController.showProblemList = function (page,group_id) {
     ProblemListModel.prototype.loadTemplate();
     var startPosition = problemListController.convertPageToSize(page);
 
@@ -37,6 +37,5 @@ problemListController.showProblemList = function (page) {
         var AnchorsToBind = problemListController.scopeBlock.getElementsByTagName("a");
         jRouter.parseAnchor(AnchorsToBind);
     });
-
 
 };

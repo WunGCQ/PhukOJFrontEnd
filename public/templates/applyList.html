@@ -1,0 +1,51 @@
+<table class="styled-table" id="apply-table">
+    <thead>
+        <tr>
+            <th width="120">用户名</th>
+            <th width="120">昵称</th>
+            <th width="160">申请时间</th>
+            <th width="200" colspan="2"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            {@if apply_number > 0}
+            <td colspan="3">
+                待审查申请个数：
+            </td>
+            <td colspan="2">
+                ${apply_number}
+            </td>
+            {@/if}
+            {@if apply_number == 0}
+            <td colspan="5">
+                目前暂无申请
+            </td>
+            {@/if}
+
+        </tr>
+        {@each applyList as apply}
+        <tr>
+            <td>
+                ${apply.username}
+            </td>
+            <td>
+                ${apply.nickname}
+            </td>
+            <td>
+                ${apply.join_time}
+            </td>
+            <td>
+                <a class="button accept-join" data-id="${apply.user_id}">
+                    同意申请
+                </a>
+            </td>
+            <td>
+                <a class="button reject-join" data-id="${apply.user_id}">
+                    拒绝申请
+                </a>
+            </td>
+        </tr>
+        {@/each}
+    </tbody>
+</table>

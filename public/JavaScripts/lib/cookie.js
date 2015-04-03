@@ -16,15 +16,14 @@ function UI_Animate() {
 }
 
 window.cookieMethods = {};
-(function () {
     //JS操作cookies方法
 //写cookies
     cookieMethods.setCookie = function (name, value) {
-        var Days = 7;
+        var Days = 1;
         var exp = new Date();
         exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
         //document.cookie = name + "="+ escape(value) + ";expires=" + exp.toGMTString();
-        document.cookie = name + "=" + value + ";expires=" + exp.toGMTString();
+        document.cookie = name + "=" + value + ";expires=" + exp.toGMTString()+'; path="/";';
     };
 //读取cookies
     cookieMethods.getCookie = function (name) {
@@ -40,9 +39,16 @@ window.cookieMethods = {};
         var exp = new Date();
         exp.setTime(exp.getTime() - 1);
         var cval = cookieMethods.getCookie(name);
-        if (cval != null) document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+        if (cval != null) document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString()+ '; path="/";'
     };
+cookieMethods.clearCookie = function () {
+    var exp = new Date();
+    exp.setTime(exp.getTime() - 1);
+    var arr, reg = new RegExp("(^| )" +"host="+ Model.XHRPathHead()+";");
+    if(arr = document.cookie.match(reg)) {
+        document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString()+'; path="/";';
+    }
+};
 //使用示例
     //cookie_methods.set_cookie("name","hayden");
 //alert(cookie_methods.get_cookie("name"));
-})();

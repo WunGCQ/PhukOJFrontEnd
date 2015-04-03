@@ -1,0 +1,196 @@
+<style>
+    #create-problem-table{
+
+    }
+    #create-problem-table tbody td {
+        border: 1px solid #ccc;
+        text-align: center;
+    }
+    #create-problem-table tr {
+        background: transparent !important;
+    }
+    #problem-description {
+        width: 100%;
+        height: 300px;
+        outline: none;
+        resize: vertical;
+    }
+    #problem-description:focus {
+        border: 1px solid #16a085;
+        box-shadow: 0 0 6px 1px rgba(27, 212, 179, .1);
+    }
+    #problem-preview {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 10px;
+        text-align: left;
+    }
+
+</style>
+    <form id="create-problem-form">
+        <table id="create-problem-table" class="styled-table" style="width: 800px">
+            <thead>
+            <tr>
+                <th colspan="2">
+                    <h2>创建题目</h2>
+                </th >
+            </tr>
+            <tr style="display: none;">
+                <th width="400"></th>
+                <th width="400" ></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td colspan="2">
+                    <input type="text" name="title" class="" placeholder="题目标题" required="required"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                   是否公开
+                </td>
+                <td>
+                    <select name="access_level">
+                        <option value="0" selected>不公开</option>
+                        <option value="1" >小组内部可见</option>
+                        <option value="2">公开</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <textarea id="problem-description" name="description" class="" placeholder="题目描述" required="required"></textarea>
+                </td>
+                <td style="vertical-align: top;">
+                    <div id="problem-preview" class="markdown-body">
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td >
+                    文件版本
+                </td>
+                <td>
+                    <input type="text" name="files_version" placeholder="文件版本"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    支持语言
+                </td>
+                <td>
+                    <label>
+                        <input type="checkbox" name="support_lang" placeholder="支持语言" value="C"/>
+                        C
+                    </label>
+                    <label>
+                        <input type="checkbox" name="support_lang" placeholder="支持语言" value="CPP"/>
+                        C++
+                    </label>
+                    <label>
+                        <input type="checkbox" name="support_lang" placeholder="支持语言" value="JAVA"/>
+                        JAVA
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    内存限制
+                </td>
+                <td>
+                    <input type="text" name="memory_limit" placeholder="内存限制"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    总时间限制
+                </td>
+                <td>
+                    <input type="text" name="time_limit_global" placeholder="总时间限制"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    每轮时间限制
+                </td>
+                <td>
+                    <input type="text" name="time_limit_case" placeholder="每轮时间限制"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    标准输入文件
+                    <a class="button" onclick="addFileInputs('input-file-scope','standard_input_files')" >添加文件</a>
+                    <script>
+                        function addFileInputs(scopeId,name) {
+                            var t = new Date().getTime();
+                            $("#"+scopeId).append('<input type="file" name="'+name+t+'" style="width:240px"/>');
+                        }
+                    </script>
+                </td>
+                <td id="input-file-scope"  style="width:300px !important;">
+                    <input type="file" name="standard_input_files" placeholder="标准输入文件"  style="width:240px"/>
+                </td>
+
+            </tr>
+            <tr>
+                <td style="width:300px !important;">
+                    标准输出文件
+                    <a class="button" onclick="addFileInputs('output-file-scope','standard_output_files')">添加文件</a>
+
+                </td>
+                <td id="output-file-scope">
+                    <input type="file" name="standard_output_files" placeholder="标准输出文件" style="width:240px"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    每轮权重
+                </td>
+                <td>
+                    <input type="text" name="round_weight" placeholder="每轮权重"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    通过条件
+                </td>
+                <td>
+                    <input type="text" name="compare_ac_level" placeholder="通过条件"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    大小写错误敏感
+                </td>
+                <td>
+                    <input type="text" name="compare_pre_case_insensitive" placeholder="大小写错误敏感"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    特殊检测
+                </td>
+                <td>
+                    <input type="text" name="compare_special" placeholder="特殊检测"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center">
+                    <a class="button submit">
+                        提交
+                    </a>
+                    <a class="button preview" style="margin: auto 20px;">
+                        预览
+                    </a>
+                    <a class="button back" onclick="history.back();">
+                        返回
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>

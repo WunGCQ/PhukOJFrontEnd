@@ -1,56 +1,132 @@
 <style>
-    #membership-section {
-        display: block;
+    #application-section,#membership-section {
         width: 700px;
         text-align: center;
-        height: auto;
-        clear: both;
-    }
-
-    #load-membership {
-        display: block;
-        width: 15px;
-        height: 15px;
-        text-align: center;
-        line-height: 15px;
-        background-color: #aaa;
-        color: #494949;
-        float: left;
-        margin-top: 2px;
+        margin: auto;
     }
 </style>
 <article data-id="${group.group_id}" data-name="${group.name}" data-contest_count="${group.group-contest_count}"
          data-problem_count="${group.problem_count}" data-member_count="${group.member_count}">
-    <header>
-        小组名称：${group.name}
-    </header>
-    <section>
-        <p>
-            小组比赛：<span>共 ${group.contest_count} 场</span>
+        <h2>${group.name}</h2>
+    <nav id="group-nav">
+        <a class="nav-item active" data-click-target="group-info">
+            <i class="fa fa-info-circle"></i>
+            <span>小组信息</span>
+        </a>
+        <a class="nav-item" data-click-target="group-member">
+            <i class="fa fa-users"></i>
+            <span>小组成员</span>
+        </a>
+        <a class="nav-item" data-click-target="group-problem">
+            <i class="fa fa-lightbulb-o"></i>
+            <span>小组题目</span>
+        </a>
+        <a class="nav-item" data-click-target="group-contest">
+            <i class="fa fa-flag-checkered"></i>
+            <span>小组比赛</span>
+        </a>
 
-        </p>
+    </nav>
 
-        <p>
-            小组比赛列表
-        </p>
+    <div class="group-tab-page active" id="group-info">
 
-        <p>
-            小组题目：<span>共 ${group.problem_count} 道</span>
-        </p>
+        <section>
+            <table class="styled-table" style="width: 600px">
+                <thead style="visibility: hidden;">
+                <th width="300"></th>
+                <th width="300"></th>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        创建者
+                    </td>
+                    <td>
+                        <a href="/user/${group.creater.user_id}">${group.creater.username}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        所有者
+                    </td>
+                    <td>
+                        <a href="/user/${group.owner.user_id}">${group.owner.username}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        创建时间
+                    </td>
+                    <td>
+                        <time>
+                            ${group.create_time}
+                        </time>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        比赛场次
+                    </td>
+                    <td>
+                        ${group.contest_count}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        出题数
+                    </td>
+                    <td>
+                        ${group.problem_count}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        成员数
+                    </td>
+                    <td>
+                        <span class="group_member">${group.member_count}</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
 
-        <p>
-            小组题目列表
-        </p>
+        </section>
+    </div>
 
-        <p>
-            小组成员：<span>共 ${group.member_count} 道</span>
-        </p>
+    <div class="group-tab-page" id="group-member">
+        <section id="membership-section">
+            <span id="load-membership" onclick="MembershipController.showMembership(${group.group_id})">+ 显示小组成员列表</span>
+        </section>
 
-        <p>
-            小组成员列表
-        </p>
-    </section>
-    <section id="membership-section">
-        <span id="load-membership" onclick="MembershipController.showMembership(${group.group_id})">+</span>
-    </section>
+        {@if group.auth.madmin == "1" }
+        <section id="application-section">
+            <span id="load-application" onclick="MembershipController.showApplicationList(${group.group_id})">+ 显示申请列表</span>
+        </section>
+
+        {@/if}
+
+    </div>
+
+    <div class="group-tab-page" id="group-problem">
+        <div>
+            {@if group.auth.pcreate == "1" }
+                <a class="button buttonToParse" href="/createProblem/${group.group_id}" style="width: 150px;font-size: 16px;">
+                    创建题目
+                </a>
+            {@/if}
+        </div>
+
+    </div>
+
+    <div class="group-tab-page" id="group-contest">
+        <div>
+            {@if group.auth.ccreate == "1" }
+            <a class="button buttonToParse" href="/createContest/${group.group_id}" style="width: 150px;font-size: 16px;">
+                创建比赛
+            </a>
+            {@/if}
+        </div>
+    </div>
+
+
 </article>

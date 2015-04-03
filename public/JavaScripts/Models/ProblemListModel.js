@@ -2,7 +2,9 @@
  * Created by wungcq on 15/2/24.
  */
 window.ProblemListModel = function (ProblemListData) {
-    if (typeof this.ProblemListData == "undefined" && typeof ProblemListData != "undefined") {
+
+    if (typeof ProblemListData != "undefined") {
+        this.init(ProblemListData);
         this.modelData = ProblemListData;
     }
     this.loadTemplate();
@@ -14,8 +16,10 @@ ProblemListModel.prototype = new Model();
 
 //需要设置每个数据模型的增删改查路径和参数
 (function () {
-    ProblemListModel.prototype.templatePath = Model.XHRPathHead() + '/templates/contestProblemList.html';
-    ProblemListModel.prototype.RetrievePath = Model.XHRPathHead() + '/api/problem/list';
+    ProblemListModel.prototype.templatePath = Model.XHRPathHead() + '/templates/problemlist.html';
+    ProblemListModel.prototype.RetrievePath = Model.XHRPathHead() + '/api/problem/list/global';
+    ProblemListModel.prototype.groupRetrievePath = Model.XHRPathHead() + '/api/problem/list';
+    ProblemListModel.prototype.template = '<table id="problem-list-table" class="styled-table" style="width:600px"><thead><tr><th width="10%">编号</th><th width="50%">名称</th><th width="15%">作者</th><th width="10%">提交数</th><th width="15%">通过数</th></tr></thead><tbody>{@each problem_list as problem}<tr><td>${problem.id}</td><td><a href="/problem/${problem.id}">${problem.title}</a></td><td><a href="/user/${problem.creater_id}">${problem.creater_name}</a></td><td><span>${problem.total_submit}</span></td><td><span>${problem.total_accepted}</span></td></tr>{@/each}</tbody></table>';
 })();
 
 ProblemListModel.prototype.init = function (ProblemListData) {
@@ -29,12 +33,19 @@ ProblemListModel.prototype.init = function (ProblemListData) {
 //};
 
 //通过pageData获取分页信息
-ProblemListModel.prototype.RETRIEVE = function (pageData, callback) {
-
+ProblemListModel.prototype.RETRIEVE = function (pageData,group_id, callback) {
+    var data = pageData;
+    if(group_id){
+        data.group_id = group_id;
+    }else{
+        data.group_id = -1;
+    }
+    var url = data.group_id==-1 ? ProblemListModel.prototype.RetrievePath:ProblemListModel.prototype.groupRetrievePath;
+    data.user_id = window.currentUser == undefined ? cookieMethods.getCookie("user_id") : window.currentUser.user_id;
     $.ajax(
         {
-            url: ProblemListModel.prototype.RetrievePath,
-            data: pageData,
+            url: url,
+            data: data,
             type: ProblemListModel.prototype.Retrievemethod,
             async: false,
             dataType: "json",
@@ -58,10 +69,10 @@ ProblemListModel.prototype.RETRIEVE = function (pageData, callback) {
             success: function (Data) {
                 if (Data.code == 1)//返回无误
                 {
-
+                    problemListController.currentProblemList = new ProblemListModel(Data);
                     if (typeof callback == "function") {
-                        problemListController.currentProblemList = new ProblemListModel(Data);
-                        callback();
+
+                        callback(Data);
                     }
                     return true;
                 }

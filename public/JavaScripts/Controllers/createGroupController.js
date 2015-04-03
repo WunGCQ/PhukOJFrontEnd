@@ -7,6 +7,9 @@ var createGroupController = function(){
 createGroupController.prototype = new Model();
 createGroupController.prototype.templatePath = Model.XHRPathHead()+'/templates/newGroup.html';
 
+createGroupController.prototype.template = '<form action="#"><table id="create-group-table" class="styled-table" style="width:320px"><thead><tr><th colspan="2"><h2>创建小组</h2></th></tr><tr style="display:none"><th width="80"></th><th width="240"></th></tr></thead><tbody><tr><td>小组名称</td><td><input type="text" name="name" class="" placeholder="小组名称" required></td></tr><tr><td>小组描述</td><td><input type="text" name="description" class="" placeholder="描述一下你的小组～" required></td></tr><tr><td colspan="2"><a class="button submit">提交</a> <a class="button back" onclick="history.back()">返回</a></td></tr></tbody></table></form>';
+
+
 
 createGroupController.prototype.showPage = function(){
 

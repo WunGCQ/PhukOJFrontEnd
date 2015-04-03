@@ -201,9 +201,12 @@ function setRouteController() {
                     //setActiveLink();
                     hideMainSections();
                     if(window.createGroupControllerEntity == undefined){
-                        window.createGroupControllerEntity = new createGroupController();
+                        window.createGroupControllerEntity = new createGroupController(groupListPageParam);
+                    }else{
+                        window.createGroupControllerEntity = new createGroupController(groupListPageParam);
+                        window.createGroupControllerEntity.showPage();
                     }
-                    window.createGroupControllerEntity.showPage();
+
 
                     //document.getElementById('group-section')._css("display","block");
                 }
@@ -428,6 +431,24 @@ function setRouteController() {
             fun: [
                 function (isReplace, path) {
                     UserInfoController.updateUserPWD();
+                }
+            ]
+        }
+    );
+    jRouter().setRouter(
+        {
+            name: 'createProblem',
+            type: 'get',
+            url: '/createProblem/',
+            fun: [
+                function (isReplace, path) {
+                    jump(isReplace,path);
+                    var groupParam = parseInt(jRouter.getUrlParam(path).params[1]);
+                    hideMainSections();
+                    if (typeof window.createProblemControllerEntity == 'undefined') {
+                        window.createProblemControllerEntity= new createProblemController();
+                    }
+                    window.createProblemControllerEntity.showPage();
                 }
             ]
         }

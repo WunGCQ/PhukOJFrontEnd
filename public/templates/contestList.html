@@ -13,7 +13,7 @@
     <tr>
         <th>比赛编号</th>
         <th>比赛名称</th>
-        <th>类型</th>
+        <th>小组</th>
         <th>开始时间</th>
         <th>结束时间</th>
     </tr>
@@ -33,7 +33,7 @@
                     </span>
         </td>
         <td>
-            <span>${contest.type}</span>
+            <span><a href="/group/${contest.group_id}">${contest.group_name}</a></span>
         </td>
         <td>${contest.start_time}</td>
         <td>${contest.end_time}</td>

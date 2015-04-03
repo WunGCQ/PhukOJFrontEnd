@@ -94,13 +94,13 @@ var loginController = function () {
                 dataType: "json",
                 beforeSend: function(request) {
                     var session_id = cookieMethods.getCookie("token");
-                    var user_id = cookieMethods.getCookie("user_id");
-                    if(user_id!=undefined) {
-                        request.setRequestHeader("user-Id",user_id);
-                    }
-                    else {
-                        request.setRequestHeader("user-Id",-1);
-                    }
+                    //var user_id = cookieMethods.getCookie("user_id");
+                    //if(user_id!=undefined) {
+                    //    request.setRequestHeader("user-Id",user_id);
+                    //}
+                    //else {
+                    //    request.setRequestHeader("user-Id",-1);
+                    //}
                     if(session_id!=undefined) {
                         request.setRequestHeader("Session-Id",session_id);
                     }
@@ -109,7 +109,7 @@ var loginController = function () {
                     }
 
                 },
-                success: function (data) {
+                success: function (data, textStatus, request) {
                     //将提示等待的信息消除
                     //topMessage.prototype.remove();
                     //removeAllMessages();
@@ -120,7 +120,9 @@ var loginController = function () {
                         //无论如何重新初始化用户
                         //控制器生成UserModel
                         window.currentUser = new UserModel(data.user);
-                        window.currentUser.writeCookie(data.user.user_id,data.user.username, data.token);
+                        var token = request.getResponseHeader("Session-Id");
+                        window.currentUser.writeCookie(data.user.user_id, data.user.username, token);
+
                         //window.currentUser.writeCookie(data.user.username);
                         //补全界面元素
                         window.currentUser.setUserBarLog(data.user.username);

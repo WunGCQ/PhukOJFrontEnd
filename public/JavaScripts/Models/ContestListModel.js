@@ -17,7 +17,7 @@ ContestListModel.prototype = new Model();
 (function () {
     //todo 伪造json数据
     ContestListModel.prototype.templatePath = Model.XHRPathHead() + '/templates/contestList.html';
-    ContestListModel.prototype.RetrievePath = Model.XHRPathHead() + '/api/contest/list';
+    ContestListModel.prototype.RetrievePath = Model.XHRPathHead() + '/api/contest/list/global';
 })();
 
 ContestListModel.prototype.init = function (ContestListData) {
@@ -29,12 +29,15 @@ ContestListModel.prototype.init = function (ContestListData) {
 
 
 //通过pageData获取分页信息
-ContestListModel.prototype.RETRIEVE = function (pageData, callback) {
+ContestListModel.prototype.RETRIEVE = function (pageData,group_id, callback) {
+    var data = pageData;
+    data.user_id = window.currentUser == undefined ? cookieMethods.getCookie("user_id") : window.currentUser.user_id;
+    data.group_id = group_id == undefined ? 0 : group_id;
 
     $.ajax(
         {
             url: ContestListModel.prototype.RetrievePath,
-            data: pageData,
+            data: data,
             type: ContestListModel.prototype.Retrievemethod,
             async: false,
             dataType: "json",
@@ -58,7 +61,10 @@ ContestListModel.prototype.RETRIEVE = function (pageData, callback) {
             success: function (Data) {
                 if (Data.code == 1)//返回无误
                 {
-
+                    for(var i=0 ; i< Data.content.length; i++) {
+                        Data.content[i].start_time = new Date(Data.content[i].start_time).toLocaleTimeString();
+                        Data.content[i].end_time = new Date(Data.content[i].end_time).toLocaleTimeString();
+                    }
                     if (typeof callback == "function") {
                         contestListController.currentContestList = new ContestListModel(Data.content);
                         callback();

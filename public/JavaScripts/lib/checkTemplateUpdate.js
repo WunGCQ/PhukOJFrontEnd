@@ -27,6 +27,8 @@ function checkTemplateUpdate() {
             },
             success: function (Data) {
                 if (Data.code == 1) {
+                    var token = request.getResponseHeader("Session-Id");
+                    cookieMethods.setCookie("token",token);
                     window.templateVersionInfo = Data.versionInfo;
                     for (t in Data.versionInfo) {
                         var ver = localStorage.getItem(t + ".Version");

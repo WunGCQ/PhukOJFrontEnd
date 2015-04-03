@@ -1,0 +1,101 @@
+#membership-section {
+    display: block;
+    width: 700px;
+    padding-bottom: 10px;
+    text-align: center;
+    height: auto;
+    clear: both;
+}
+
+.button.disabled {
+    cursor: not-allowed;
+    background-color: #aaa;
+}
+.button.disable:hover {
+    background-color: #aaa;
+}
+#load-membership,#load-application {
+    display: block;
+    margin-top: 5px;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    text-align: left;
+    padding-left: 15px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #16a085;
+    float: left;
+    box-sizing: border-box;
+    transition: all ease 0.3s;
+}
+#load-membership:hover, #load-application:hover {
+    background-color: #1bd4b3;
+}
+#membership-section,#application-section {
+    display: block;
+    clear: both;
+    position: Relative;
+    height: auto;
+    min-height: 30px;
+}
+
+#group-nav {
+    display: block;
+    margin: 10px auto;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    letter-spacing: 0;
+    font-size: 0;
+}
+
+#group-nav .nav-item{
+    display: inline-block;
+    vertical-align: top;
+    margin: auto;
+
+    width: 145px;
+    height: 40px;
+    line-height: 42px;
+    font-size: 14px;
+    text-align: center;
+    color: #7F8C8D;
+    cursor: pointer;
+    border-top:1px solid transparent;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    transition: all ease .3s;
+    border-collapse: collapse;
+}
+#group-nav .nav-item .fa{
+    margin-right: 8px;
+    font-size: 18px;
+}
+#group-nav .nav-item.active{
+    color: #16A085;
+    border-top:1px solid #16A085;
+    border-left: 1px solid #16A085;
+    border-right: 1px solid #16A085;
+}
+#group-nav .nav-item.active:after {
+    content: "";
+    display: block;
+    position: absolute;
+    background-color: #F2FBF9;
+    width: 145px;
+    margin-top: -2px;
+    height: 5px;
+}
+#group-nav
+#group-nav .nav-item .fa, #group-nav .nav-item span {
+    font-size: inherit;
+    color: inherit;
+}
+.group-tab-page {
+    display: block;
+    display: none;
+    margin: 10px auto 20px auto;
+}
+.group-tab-page.active{
+    display: block;
+}

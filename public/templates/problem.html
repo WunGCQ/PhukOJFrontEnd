@@ -3,18 +3,17 @@
     <input type="hidden" data-problem-id="{problem.id}"/>
     <span>编号: ${problem.id}</span>
     <span>作者编号：${problem.creator_id} </span>
-    <span>所属小组 ${problem.belong_group}</span>
+    <span>所属小组:<a href="/group/${problem.belong_group.group_id}">${problem.belong_group.group_name}</a></span>
     <time>最后编辑时间: ${problem.lastedit_time}</time>
     <div class="test_setting">
         <p>
-            <!--TODO 需要搞明白test_setting 具体格式-->
             <span>时间限制: ${problem.test_setting.time_limit}</span>
             <span>测试轮数: ${problem.test_setting.round}</span>
         </p>
     </div>
-    <section>
+    <section class="markdown-body">
         $${problem.description}
     </section>
-    <a href="">提交答案</a>
-    <a>查看讨论</a>
 </article>
+<a class="button">提交答案</a>
+<a class="button">查看讨论</a>

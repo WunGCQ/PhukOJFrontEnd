@@ -76,8 +76,8 @@ Model.prototype.loadTemplate = function () {
                     success: function (template) {
                         templateHTML = template;
                         temp.template = template.replace(/[\r\n]/g, "");
-                        localStorage.setItem(temp.templatePath, temp.template.toString());
-                        localStorage.setItem(temp.templatePath + ".Version", window.templateVersionInfo[temp.templatePath]);//版本号对齐
+                        //localStorage.setItem(temp.templatePath, temp.template.toString());
+                        //localStorage.setItem(temp.templatePath + ".Version", window.templateVersionInfo[temp.templatePath]);//版本号对齐
                         return templateHTML;
                     }
                 }
@@ -129,7 +129,7 @@ Model.prototype.renderPage = function () {
                     success: function (template) {
                         templateHTML = template;
                         temp.template = template.replace(/[\r\n]/g, "");
-                        localStorage.setItem(temp.templatePath, temp.template.toString());
+                        //localStorage.setItem(temp.templatePath, temp.template.toString());
                         var text = juicer(temp.template, temp.modelData);
                         return text;
                     }

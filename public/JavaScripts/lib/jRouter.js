@@ -359,12 +359,13 @@
                         Anchors[i].setAttribute('data-controller', functionLocation);//在标签中记录
                         Anchors[i].setAttribute('data-href', temp);
                         Anchors[i].removeAttribute('href');
-                        Anchors[i].addEventListener('click', function () {
-                            var functionLocation = parseInt(this.getAttribute('data-controller'));
-                            var url = this.getAttribute('data-href');//href暂存
-                            var fun = jRouter.prototype.ControllerList[functionLocation].controllerFunction;
-                            fun(false, url);
-                        });
+                        //Anchors[i].addEventListener('click', function () {
+                        //    var functionLocation = parseInt(this.getAttribute('data-controller'));
+                        //    var url = this.getAttribute('data-href');//href暂存
+                        //    var fun = jRouter.prototype.ControllerList[functionLocation].controllerFunction;
+                        //    fun(false, url);
+                        //});
+                        Anchors[i].setAttribute('onclick',"binder(this);")
 
 
                     }
@@ -422,4 +423,11 @@ function nanoRenderer(template, data) {
             return (typeof v !== "undefined" && v !== null) ? v : "";
         }
     );
+}
+
+function binder(obj) {
+    var functionLocation = parseInt(obj.getAttribute('data-controller'));
+    var url = obj.getAttribute('data-href');//href暂存
+    var fun = jRouter.prototype.ControllerList[functionLocation].controllerFunction;
+    fun(false, url);
 }
