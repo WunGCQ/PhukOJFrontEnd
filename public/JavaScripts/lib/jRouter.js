@@ -365,7 +365,7 @@
                         //    var fun = jRouter.prototype.ControllerList[functionLocation].controllerFunction;
                         //    fun(false, url);
                         //});
-                        Anchors[i].setAttribute('onclick',"binder(this);")
+                        Anchors[i].setAttribute('onclick', "binder(this);")
 
 
                     }

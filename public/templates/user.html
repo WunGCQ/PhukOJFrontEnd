@@ -123,11 +123,13 @@
     <li class="active" onclick="UserInfoController.showUserInfoTab('user-info-tab',event)">
         <a><span class="fa fa-user"></span>个人资料</a>
     </li>
+    {@if isEditable == true}
     <li onclick="UserInfoController.showUserInfoTab('user-change-password-tab',event)">
         <a><span class="fa fa-lock"></span>修改密码</a>
     </li>
+    {@/if}
     <li onclick="UserInfoController.showUserInfoTab('user-change-head-tab',event)">
-        <a><span class="fa fa-camera"></span>修改头像</a>
+        <a><span class="fa fa-camera"></span>{@if isEditable == true}修改{@/if}头像</a>
     </li>
 </ul>
 <table id="user-info-tab" class="user-info-tabs">
@@ -151,7 +153,9 @@
             <input type="hidden" placeholder="请输入昵称"/>
         </td>
         <td>
+            {@if isEditable == true}
             <a data-name="nickname" data-value="${user.nickname}" data-if-change="false">修改</a>
+            {@/if}
         </td>
     </tr>
     <tr>
@@ -171,7 +175,9 @@
             <input type="hidden" placeholder="请输入学校名称"/>
         </td>
         <td>
+            {@if isEditable == true}
             <a data-name="school" data-value="${user.school}" data-if-change="false">修改</a>
+            {@/if}
         </td>
     </tr>
     <tr>
@@ -181,7 +187,9 @@
             <input type="hidden" placeholder="请输入学院名称"/>
         </td>
         <td>
+            {@if isEditable == true}
             <a data-name="college" data-value="${user.college}" data-if-change="false">修改</a>
+            {@/if}
         </td>
     </tr>
     <tr>
@@ -191,7 +199,9 @@
             <input type="hidden" placeholder="简单两句话，介绍你自己~"/>
         </td>
         <td>
+            {@if isEditable == true}
             <a data-name="self_intro" data-value="${user.self_intro}" data-if-change="false">修改</a>
+            {@/if}
         </td>
     </tr>
     <tr>
@@ -200,18 +210,25 @@
         <td></td>
     </tr>
     <tr>
+        <td>rating：</td>
+        <td><span>${user.rating}</span></td>
+        <td></td>
+    </tr>
+    <tr>
         <td>注册时间：</td>
         <td>${user.register_time}</td>
         <td></td>
     </tr>
+    {@if isEditable == true}
     <tr>
         <td colspan="3" style="text-align: center">
             <a href="/update_user/" id="save-user-info-changes" class="submit-btn" role="button"> 提交修改 </a>
         </td>
     </tr>
+    {@/if}
     </tbody>
 </table>
-
+{@if isEditable == true}
 <table id="user-change-password-tab" class="user-info-tabs" style="display: none;">
     <thead>
     <tr>
@@ -220,6 +237,7 @@
         <th width="100"></th>
     </tr>
     </thead>
+
     <tbody>
     <form>
         <tr>
@@ -248,8 +266,15 @@
     </form>
     </tbody>
 </table>
+{@/if}
 <table id="user-change-head-tab" class="user-info-tabs" style="display: none;">
     <tbody>
+    <tr>
+        <td colspan="2">
+            <img src="${user.head}" alt="头像"/>
+        </td>
+    </tr>
+    {@if isEditable == true}
     <form>
         <tr>
             <td>
@@ -262,13 +287,14 @@
             </td>
         </tr>
     </form>
-        <tr>
-            <td colspan="2">
-                <a href="" class="button">
-                    上传
-                </a>
-            </td>
-        </tr>
+    <tr>
+        <td colspan="2">
+            <a href="" class="button">
+                上传
+            </a>
+        </td>
+    </tr>
+    {@/if}
     </tbody>
 </table>
 

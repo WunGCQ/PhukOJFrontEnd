@@ -30,8 +30,15 @@
     <link rel="stylesheet" href="../stylesheets/jquery.dataTables.min.css"/>
     <!--小组模块-->
     <link rel="stylesheet" href="../stylesheets/group.css"/>
+    <!--讨论-->
+    <link rel="stylesheet" href="../stylesheets/discussion.css"/>
+    <!--回复-->
+    <link rel="stylesheet" href="../stylesheets/reply.css"/>
     <!--markdown-->
     <link rel="stylesheet" href="../stylesheets/markdown.css"/>
+    <!--highlight-->
+    <link rel="stylesheet" href="../stylesheets/hightlight.css"/>
+
 
     <!--跳转-->
     <script src="../JavaScripts/lib/jRouter.js"></script>
@@ -198,8 +205,8 @@
         //setActiveLink();
         currentPagejRouter.initPage();
         //TODO 向服务器取用户信息，取不到则设置参数为未登录的样式，取到的话创建用户对象
-        UserModel.prototype.checkIsLogin();
-//        checkTemplateUpdate();
+        UserInfoController.checkIsLogin();
+        checkTemplateUpdate();
         setActiveLink();
 
     };
@@ -218,7 +225,6 @@
 
 
 </script>
-
 
 
 <script src="../JavaScripts/Models/Model.js"></script>
@@ -299,21 +305,23 @@
     </div>
 </div>
 <div id="progressing" class="modal-background" style="display: table;background-color: rgba(0,0,0, .5);display: none;">
-    <div id="progress-bar-wrapper" style="display: block;margin: auto;margin-top: calc(53vh - 12px);height:24px;width: 300px;background-color: rgba(255,255,255, .7);border-radius: 2px; ">
-        <div id="progress-bar" style="display:block; position: relative;left: 0;height: 24px; background-color:#2ecc71; width: 0%;border-radius:0 2px 2px 0; opacity: .8;text-align: right;font-size: 16px;min-width: 20px;color:#fff;line-height: 24px;padding-right: 5px;box-sizing: border-box;">
+    <div id="progress-bar-wrapper"
+         style="display: block;margin: auto;margin-top: calc(53vh - 12px);height:24px;width: 300px;background-color: rgba(255,255,255, .7);border-radius: 2px; ">
+        <div id="progress-bar"
+             style="display:block; position: relative;left: 0;height: 24px; background-color:#2ecc71; width: 0%;border-radius:0 2px 2px 0; opacity: .8;text-align: right;font-size: 16px;min-width: 20px;color:#fff;line-height: 24px;padding-right: 5px;box-sizing: border-box;">
             0
         </div>
         <script>
             window.progressing = {};
-            window.progressing.percent = function(percentage){
-                $("#progress-bar").text(percentage).css("width",percentage+"%");
-                if(percentage>99.5){
+            window.progressing.percent = function (percentage) {
+                $("#progress-bar").text(percentage).css("width", percentage + "%");
+                if (percentage > 99.5) {
                     $("#progressing").hide();
                     progressing.percent(0);
                 }
 
             };
-            window.progressing.init = function(){
+            window.progressing.init = function () {
                 $("#progressing").show();
                 progressing.percent(0);
             }
@@ -321,7 +329,6 @@
         </script>
     </div>
 </div>
-
 
 
 <!--题目模块-->
@@ -370,10 +377,29 @@
 <script src="../JavaScripts/Controllers/createProblemController.js"></script>
 <!--添加小组比赛控制器-->
 <script src="../JavaScripts/Controllers/createContestController.js"></script>
+<!--添加提交模型-->
+<script src="../JavaScripts/Models/SubmissionModel.js"></script>
+<!--添加提交控制器-->
+<script src="../JavaScripts/Controllers/submissionController.js"></script>
+<!--讨论模型-->
+<script src="../JavaScripts/Models/DiscussionModel.js"></script>
+<!--讨论控制器-->
+<script src="../JavaScripts/Controllers/discussionController.js"></script>
+<!--回复模型-->
+<script src="../JavaScripts/Models/ReplyModel.js"></script>
+<!--回复控制器-->
+<script src="../JavaScripts/Controllers/replyController.js"></script>
+<!--tab绑定-->
+<script src="../JavaScripts/lib/preventTextAreaTab.js"></script>
+<!--代码高亮-->
+<script src="../JavaScripts/lib/highlight.min.js"></script>
+
 <!--需要注意的是 这里script如果直接用模板转义之后的innerHTML注入是没有用的，
 本着不造与业务无关的复杂轮子的思想，直接使用jQuery的html()和append()来写入转换后的模板代码-->
 
-
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
 <!--引入datatable-->
 <!--<script src="../JavaScripts/lib/datatable.js"></script>-->
 <script src="../JavaScripts/lib/MD5.js"></script>

@@ -5,7 +5,7 @@
  * Created by wungcq on 15/2/15.
  */
 //MembershipController.currentMembership = null;//全局对象，记录当前的题目
-window.MembershipModel = function(membershipData) {
+window.MembershipModel = function (membershipData) {
     if (membershipData != null || typeof membershipData != "undefined") {
         this.init(membershipData);
     }
@@ -22,7 +22,7 @@ MembershipModel.prototype.template = '<table id="membership-table" class="styled
 //Membership 继承自数据模型类
 MembershipModel.prototype = new Model();
 //需要设置每个数据模型的增删改查路径
-(function() {
+(function () {
     MembershipModel.prototype.templatePath = Model.XHRPathHead() + '/templates/membership.html';
     MembershipModel.prototype.AddPath = Model.XHRPathHead() + '/api/group/membership/';
     MembershipModel.prototype.RetrievePath = Model.XHRPathHead() + '/api/group/membership/list';
@@ -37,7 +37,7 @@ MembershipModel.prototype = new Model();
 })();
 
 //
-MembershipModel.prototype.init = function(membershipData) {
+MembershipModel.prototype.init = function (membershipData) {
     this.modelData = {
         'membership': membershipData
     };
@@ -59,12 +59,12 @@ MembershipModel.prototype.init = function(membershipData) {
 //    }
 //    return false;
 //};
-MembershipModel.pushMembershipDataCache = function(data) {
+MembershipModel.pushMembershipDataCache = function (data) {
     MembershipModel.prototype.MembershipDataCache.push(data);
     return;
 };
 
-MembershipModel.convertMembershipTimeToString = function(data) {
+MembershipModel.convertMembershipTimeToString = function (data) {
     for (var i = 0; i < data.length; i++) {
         var d = new Date(data[i]["join_time"]);
         data[i]["join_time"] = d.toLocaleString();
@@ -74,7 +74,7 @@ MembershipModel.convertMembershipTimeToString = function(data) {
 
 //通过id获取题目信息
 //todo 想清楚应不应该放在原型中，是否需要实例去调用？
-MembershipModel.prototype.RETRIEVE = function(group_id, callback) {
+MembershipModel.prototype.RETRIEVE = function (group_id, callback) {
     if (typeof group_id == 'undefined') {
         var data = null;
     } else {
@@ -110,7 +110,7 @@ MembershipModel.prototype.RETRIEVE = function(group_id, callback) {
             type: MembershipModel.prototype.Retrievemethod,
             async: false,
             dataType: "json",
-            beforeSend: function(request) {
+            beforeSend: function (request) {
                 var session_id = cookieMethods.getCookie("token");
                 var user_id = cookieMethods.getCookie("user_id");
                 if (user_id != undefined) {
@@ -125,14 +125,14 @@ MembershipModel.prototype.RETRIEVE = function(group_id, callback) {
                 }
 
             },
-            success: function(Data) {
+            success: function (Data) {
                 if (Data.code == 1) //返回无误
                 {
                     var content = Data.content;
                     var d = {};
 
                     content = MembershipModel.convertMembershipTimeToString(content);
-                    d.auth =  window.currentGroup.modelData.group.auth;
+                    d.auth = window.currentGroup.modelData.group.auth;
                     d.content = content;
                     if (MembershipController.currentMembership == null || typeof MembershipController.currentMembership == "undefined") {
                         MembershipController.currentMembership = new MembershipModel(d);
@@ -152,7 +152,7 @@ MembershipModel.prototype.RETRIEVE = function(group_id, callback) {
                     return true;
                 }
             },
-            fail: function() {
+            fail: function () {
                 topMessage({
                     Message: '服务器连接异常，请检查网络或稍后重试',
                     Type: 'fail'
@@ -162,7 +162,7 @@ MembershipModel.prototype.RETRIEVE = function(group_id, callback) {
     }
 
 };
-MembershipModel.prototype.retrievePrivilege = function(user_id, group_id, callback) {
+MembershipModel.prototype.retrievePrivilege = function (user_id, group_id, callback) {
     var data = {
         "user_id": user_id,
         "group_id": group_id
@@ -172,7 +172,7 @@ MembershipModel.prototype.retrievePrivilege = function(user_id, group_id, callba
         data: data,
         type: 'POST',
         dataType: "json",
-        beforeSend: function(request) {
+        beforeSend: function (request) {
             var session_id = cookieMethods.getCookie("token");
             if (session_id != undefined) {
                 request.setRequestHeader("Session-Id", session_id);
@@ -181,7 +181,7 @@ MembershipModel.prototype.retrievePrivilege = function(user_id, group_id, callba
             }
 
         },
-        success: function(Data) {
+        success: function (Data) {
 
             if (Data.code == 1) {
                 if (typeof callback != 'undefined') {
@@ -197,7 +197,7 @@ MembershipModel.prototype.retrievePrivilege = function(user_id, group_id, callba
             }
         },
         //压根没连上
-        fail: function() {
+        fail: function () {
             topMessage({
                 Message: '服务器连接异常，请检查网络或稍后重试',
                 Type: 'fail'
@@ -206,7 +206,7 @@ MembershipModel.prototype.retrievePrivilege = function(user_id, group_id, callba
     });
 
 };
-MembershipModel.prototype.UPDATE = function(data, callback) {
+MembershipModel.prototype.UPDATE = function (data, callback) {
 
     //向服务器发送注销的消息
     $.ajax({
@@ -214,7 +214,7 @@ MembershipModel.prototype.UPDATE = function(data, callback) {
         data: data,
         type: 'POST',
         dataType: "json",
-        beforeSend: function(request) {
+        beforeSend: function (request) {
             var session_id = cookieMethods.getCookie("token");
             if (session_id != undefined) {
                 request.setRequestHeader("Session-Id", session_id);
@@ -223,7 +223,7 @@ MembershipModel.prototype.UPDATE = function(data, callback) {
             }
 
         },
-        success: function(Data) {
+        success: function (Data) {
             //返回数据
             if (Data.code == 1) {
                 topMessage({
@@ -241,7 +241,7 @@ MembershipModel.prototype.UPDATE = function(data, callback) {
             }
         },
         //压根没连上
-        fail: function() {
+        fail: function () {
             topMessage({
                 Message: '服务器连接异常，请检查网络或稍后重试',
                 Type: 'fail'
@@ -250,13 +250,13 @@ MembershipModel.prototype.UPDATE = function(data, callback) {
     });
 
 };
-MembershipModel.prototype.updatePrivilege = function(data, callback) {
+MembershipModel.prototype.updatePrivilege = function (data, callback) {
     $.ajax({
         url: MembershipModel.prototype.updatePrivilegePath,
         data: data,
         type: 'POST',
         dataType: "json",
-        beforeSend: function(request) {
+        beforeSend: function (request) {
             var session_id = cookieMethods.getCookie("token");
             if (session_id != undefined) {
                 request.setRequestHeader("Session-Id", session_id);
@@ -265,7 +265,7 @@ MembershipModel.prototype.updatePrivilege = function(data, callback) {
             }
 
         },
-        success: function(Data) {
+        success: function (Data) {
             if (Data.code == 1) {
                 topMessage({
                     Message: '修改成功',
@@ -282,7 +282,7 @@ MembershipModel.prototype.updatePrivilege = function(data, callback) {
             }
         },
         //压根没连上
-        fail: function() {
+        fail: function () {
             topMessage({
                 Message: '服务器连接异常，请检查网络或稍后重试',
                 Type: 'fail'
@@ -292,14 +292,14 @@ MembershipModel.prototype.updatePrivilege = function(data, callback) {
 
 };
 
-MembershipModel.prototype.REMOVE = function(data, callback) {
+MembershipModel.prototype.REMOVE = function (data, callback) {
 
     $.ajax({
         url: MembershipModel.prototype.RemovePath,
         data: data,
         type: 'POST',
         dataType: "json",
-        beforeSend: function(request) {
+        beforeSend: function (request) {
             var session_id = cookieMethods.getCookie("token");
             if (session_id != undefined) {
                 request.setRequestHeader("Session-Id", session_id);
@@ -308,7 +308,7 @@ MembershipModel.prototype.REMOVE = function(data, callback) {
             }
 
         },
-        success: function(Data) {
+        success: function (Data) {
             //返回数据
             if (Data.code == 1) {
                 topMessage({
@@ -326,7 +326,7 @@ MembershipModel.prototype.REMOVE = function(data, callback) {
             }
         },
         //压根没连上
-        fail: function() {
+        fail: function () {
             topMessage({
                 Message: '服务器连接异常，请检查网络或稍后重试',
                 Type: 'fail'
@@ -335,14 +335,14 @@ MembershipModel.prototype.REMOVE = function(data, callback) {
     });
 
 };
-MembershipModel.prototype.REMOVE = function(data, callback) {
+MembershipModel.prototype.REMOVE = function (data, callback) {
 
     $.ajax({
         url: MembershipModel.prototype.RemovePath,
         data: data,
         type: 'POST',
         dataType: "json",
-        beforeSend: function(request) {
+        beforeSend: function (request) {
             var session_id = cookieMethods.getCookie("token");
             if (session_id != undefined) {
                 request.setRequestHeader("Session-Id", session_id);
@@ -351,7 +351,7 @@ MembershipModel.prototype.REMOVE = function(data, callback) {
             }
 
         },
-        success: function(Data) {
+        success: function (Data) {
             //返回数据
             if (Data.code == 1) {
                 topMessage({
@@ -369,7 +369,7 @@ MembershipModel.prototype.REMOVE = function(data, callback) {
             }
         },
         //压根没连上
-        fail: function() {
+        fail: function () {
             topMessage({
                 Message: '服务器连接异常，请检查网络或稍后重试',
                 Type: 'fail'
@@ -378,14 +378,14 @@ MembershipModel.prototype.REMOVE = function(data, callback) {
     });
 
 };
-MembershipModel.prototype.getApplicationList = function(data, callback) {
+MembershipModel.prototype.getApplicationList = function (data, callback) {
 
     $.ajax({
         url: MembershipModel.prototype.applyListPath,
         data: data,
         type: 'POST',
         dataType: "json",
-        beforeSend: function(request) {
+        beforeSend: function (request) {
             var session_id = cookieMethods.getCookie("token");
             if (session_id != undefined) {
                 request.setRequestHeader("Session-Id", session_id);
@@ -394,14 +394,14 @@ MembershipModel.prototype.getApplicationList = function(data, callback) {
             }
 
         },
-        success: function(Data) {
+        success: function (Data) {
             //返回数据
             if (Data.code == 1) {
 
                 if (typeof callback != 'undefined') {
                     Data.content = MembershipModel.convertMembershipTimeToString(Data.content);
                     Data.apply_number = Data.content.length;
-                    callback.call(this,Data);
+                    callback.call(this, Data);
                 }
             } else {
                 topMessage({
@@ -411,7 +411,7 @@ MembershipModel.prototype.getApplicationList = function(data, callback) {
             }
         },
         //压根没连上
-        fail: function() {
+        fail: function () {
             topMessage({
                 Message: '服务器连接异常，请检查网络或稍后重试',
                 Type: 'fail'
@@ -420,14 +420,14 @@ MembershipModel.prototype.getApplicationList = function(data, callback) {
     });
 
 };
-MembershipModel.prototype.acceptApply = function(data, callback) {
+MembershipModel.prototype.acceptApply = function (data, callback) {
 
     $.ajax({
         url: MembershipModel.prototype.applyAcceptPath,
         data: data,
         type: 'POST',
         dataType: "json",
-        beforeSend: function(request) {
+        beforeSend: function (request) {
             var session_id = cookieMethods.getCookie("token");
             if (session_id != undefined) {
                 request.setRequestHeader("Session-Id", session_id);
@@ -436,7 +436,7 @@ MembershipModel.prototype.acceptApply = function(data, callback) {
             }
 
         },
-        success: function(Data) {
+        success: function (Data) {
             //返回数据
             topMessage({
                 Message: '已经添加该成员',
@@ -444,7 +444,7 @@ MembershipModel.prototype.acceptApply = function(data, callback) {
             });
             if (Data.code == 1) {
                 if (typeof callback != 'undefined') {
-                    callback.call(this,Data);
+                    callback.call(this, Data);
                 }
             } else {
                 topMessage({
@@ -454,7 +454,7 @@ MembershipModel.prototype.acceptApply = function(data, callback) {
             }
         },
         //压根没连上
-        fail: function() {
+        fail: function () {
             topMessage({
                 Message: '服务器连接异常，请检查网络或稍后重试',
                 Type: 'fail'

@@ -10,7 +10,8 @@ form {
 
 input[type="text"],
 input[type="password"],
-input[type="email"] {
+input[type="email"]
+{
     display: block;
     background: #fff;
     border: 2px solid #DCE4EC;
@@ -27,9 +28,26 @@ input[type="email"] {
     transition: all 0.5s ease;
     outline: none;
     font-family: "Microsoft YaHei", "Microsoft Yahei", "微软雅黑", Helvetica Neue, Helvetica, Arial, "Helvetica Neue", "Courier New", Courier;
-
+    text-align: left;
 }
-
+textarea,div[contenteditable="true"]  {
+    background-color: #fff;
+    border: none;
+    outline: none;
+    box-shadow:  0 1px 4px rgba(0, 0, 0, 0.27), 0 0 60px rgba(0, 0, 0, 0.04) inset;
+}
+div[contenteditable="true"] {
+    line-height: 1.5em;
+    box-sizing: border-box;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 14px;
+}
+textarea,
+div[contenteditable="true"] {
+    text-indent: 0;
+    resize: vertical;
+}
 /*注意这里的fa时宽度较大与input不在同一行所以input的margin-top作用于.fa上了，
 所以所见的input的margin-top实际上是与.fa字高和.fa的margin相互作用后的结果并不是字面值*/
 form .fa {
@@ -44,11 +62,15 @@ form .fa {
     color: #DCE4EC;
 }
 
-input:hover {
+input:hover,
+textarea:hover,
+div[contenteditable="true"] {
     border-color: #8fd5c2;
 }
 
-input:focus {
+input:focus,
+textarea:focus,
+div[contenteditable="true"] {
     border-color: #1ABC9C;
 }
 

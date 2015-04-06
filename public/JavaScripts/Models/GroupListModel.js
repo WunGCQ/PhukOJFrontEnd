@@ -37,20 +37,20 @@ GroupListModel.prototype.RETRIEVE = function (pageData, callback) {
             type: GroupListModel.prototype.Retrievemethod,
             async: false,
             dataType: "json",
-            beforeSend: function(request) {
+            beforeSend: function (request) {
                 var session_id = cookieMethods.getCookie("token");
                 var user_id = cookieMethods.getCookie("user_id");
-                if(user_id!=undefined) {
-                    request.setRequestHeader("user-Id",user_id);
+                if (user_id != undefined) {
+                    request.setRequestHeader("user-Id", user_id);
                 }
                 else {
-                    request.setRequestHeader("user-Id",-1);
+                    request.setRequestHeader("user-Id", -1);
                 }
-                if(session_id!=undefined) {
-                    request.setRequestHeader("Session-Id",session_id);
+                if (session_id != undefined) {
+                    request.setRequestHeader("Session-Id", session_id);
                 }
                 else {
-                    request.setRequestHeader("Session-Id",-1);
+                    request.setRequestHeader("Session-Id", -1);
                 }
 
             },

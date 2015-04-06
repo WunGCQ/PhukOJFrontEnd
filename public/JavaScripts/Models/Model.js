@@ -64,7 +64,7 @@ Model.prototype.getRetrievePath = function () {
 Model.prototype.loadTemplate = function () {
     var templateHTML = this.getTemplateText();
     var temp = this;
-    if (templateHTML == undefined ||templateHTML == null) {
+    if (templateHTML == undefined || templateHTML == null) {
         var templateInLocalStorage = localStorage.getItem(this.templatePath);
         if (templateInLocalStorage == undefined || templateInLocalStorage == null) {//localStorage没有找到模板，则ajax请求
             $.ajax(

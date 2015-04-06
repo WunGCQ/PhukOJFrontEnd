@@ -13,6 +13,9 @@ problemController.showProblem = function (problem_id) {
     window.currentProblem.RETRIEVE(problem_id, function () {
         var problemPageText = window.currentProblem.renderPage();
         $(problemController.scopeBlock).html(problemPageText);
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
     });
 
 };

@@ -18,7 +18,7 @@ problemListController.convertPageToSize = function (page) {
     return problemListController.start;
 };
 
-problemListController.showProblemList = function (page,group_id) {
+problemListController.showProblemList = function (page, group_id) {
     ProblemListModel.prototype.loadTemplate();
     var startPosition = problemListController.convertPageToSize(page);
 
@@ -29,7 +29,7 @@ problemListController.showProblemList = function (page,group_id) {
 
     problemListController.currentProblemList = new ProblemListModel();
 
-    problemListController.currentProblemList.RETRIEVE(pageData, function () {
+    problemListController.currentProblemList.RETRIEVE(pageData, -1, function () {
         var problemListPageText = problemListController.currentProblemList.renderPage();
         //problemListPageText += juicer(problemListPageText,{"page":{"page":problemListController.page}});
         $(problemListController.scopeBlock).html(problemListPageText);

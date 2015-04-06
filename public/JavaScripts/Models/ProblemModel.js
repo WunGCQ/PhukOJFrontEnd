@@ -24,7 +24,169 @@ ProblemModel.prototype = new Model();
     ProblemModel.prototype.RetrievePath = Model.XHRPathHead() + '/api/problem/info';
     ProblemModel.prototype.UpdatePath = Model.XHRPathHead() + '/api/problem/update';
     ProblemModel.prototype.ProblemDataCache = new Array();//题目的缓存,缓存的是对象的json Data,省去向服务器查询
-    ProblemModel.prototype.template= '<article><h2>${problem.title}</h2><input type="hidden" data-problem-id="{problem.id}"> <span>编号: ${problem.id}</span> <span>作者编号：${problem.creator_id}</span> <span>所属小组:<a href="/group/${problem.belong_group.group_id}">${problem.belong_group.group_name}</a></span> <time>最后编辑时间: ${problem.lastedit_time}</time><div class="test_setting"><p><span>时间限制: ${problem.test_setting.time_limit}</span> <span>测试轮数: ${problem.test_setting.round}</span></p></div><section class="markdown-body">$${problem.description}</section></article><a class="button">提交答案</a> <a class="button">查看讨论</a>';
+    var strVar = "";
+    strVar += "<style>";
+    strVar += "    #create-submission-section, #discussion-section{";
+    strVar += "        display: block;";
+    strVar += "        display: none;";
+    strVar += "        width: 600px;";
+    strVar += "";
+    strVar += "    }";
+    strVar += "    #create-submission-section td, #discussion-section td ,#create-submission-section tr, #discussion-section tr {";
+    strVar += "        background-color: transparent;";
+    strVar += "        border: none;";
+    strVar += "    }";
+    strVar += "    #create-submission-code {";
+    strVar += "        width: 100%;";
+    strVar += "        box-sizing: border-box;";
+    strVar += "        background-color: #fff;";
+    strVar += "        color: #555;";
+    strVar += "        padding: 10px;";
+    strVar += "        font-family: consolas,monospace;";
+    strVar += "        font-size: 16px;";
+    strVar += "        outline: none;";
+    strVar += "        resize: vertical;";
+    strVar += "    }";
+    strVar += "    #create-submission-code:focus {";
+    strVar += "        background: #333;";
+    strVar += "        color: #fff;";
+    strVar += "    }";
+    strVar += "    #test-setting-table {";
+    strVar += "        width: auto;";
+    strVar += "    }";
+    strVar += "    #test-setting-table tr>td:first-child {";
+    strVar += "        text-align: right;";
+    strVar += "        padding-right: 20px;";
+    strVar += "    }";
+    strVar += "    #test-setting-table tr>td:last-child {";
+    strVar += "        text-align: left;";
+    strVar += "        padding-left: 20px;";
+    strVar += "        padding-right: 20px;";
+    strVar += "        color: #16A085;";
+    strVar += "    }";
+    strVar += "    .underline-a {";
+    strVar += "        color: #008080;";
+    strVar += "        cursor: pointer;";
+    strVar += "        transition: all ease .5s;";
+    strVar += "    }";
+    strVar += "    .underline-a:hover {";
+    strVar += "        color: #16A085;";
+    strVar += "        text-decoration: underline;";
+    strVar += "    }";
+    strVar += "<\/style>";
+    strVar += "<article class=\"article-box markdown-body\">";
+    strVar += "    <h2> ${problem.title}<\/h2>";
+    strVar += "    <input type=\"hidden\" data-problem-id=\"{problem.id}\"/>";
+    strVar += "    <span>编号: ${problem.id}<\/span>";
+    strVar += "    <span>作者：<a class=\"underline-a\" href=\"/user/${problem.owner.owner_id}\">${problem.owner.owner_name}<\/a> <\/span>";
+    strVar += "    <span>所属小组:<a class=\"underline-a\" href=\"/group/${problem.belong_group.group_id}\">${problem.belong_group.group_name}<\/a><\/span>";
+    strVar += "    <time>最后编辑时间: ${problem.lastedit_time}<\/time>";
+    strVar += "";
+    strVar += "    <section class=\"markdown-body\">";
+    strVar += "        $${problem.description}";
+    strVar += "    <\/section>";
+    strVar += "    <div style=\"margin: 10px auto\">";
+    strVar += "        <table  id=\"test-setting-table\" class=\"styled-table\">";
+    strVar += "            <thead>";
+    strVar += "            <tr style=\"visibility: hidden\">";
+    strVar += "                <th width=\"150\"><\/th>";
+    strVar += "                <th ><\/th>";
+    strVar += "            <\/tr>";
+    strVar += "            <tr>";
+    strVar += "                <th colspan=\"2\">";
+    strVar += "                    测试参数";
+    strVar += "                <\/th>";
+    strVar += "            <\/tr>";
+    strVar += "            <\/thead>";
+    strVar += "            <tbody>";
+    strVar += "            <tr>";
+    strVar += "                <td>";
+    strVar += "                    测试轮数";
+    strVar += "                <\/td>";
+    strVar += "                <td>";
+    strVar += "                    ${problem.test_setting.test_round_count}";
+    strVar += "                <\/td>";
+    strVar += "            <\/tr>";
+    strVar += "            <tr>";
+    strVar += "                <td>";
+    strVar += "                    每轮权重";
+    strVar += "                <\/td>";
+    strVar += "                <td>";
+    strVar += "                    {@each　problem.test_setting.round_weight as weight}";
+    strVar += "                    <span>${weight},<\/span>";
+    strVar += "                    {@/each}";
+    strVar += "                <\/td>";
+    strVar += "            <\/tr>";
+    strVar += "";
+    strVar += "            <tr>";
+    strVar += "                <td>";
+    strVar += "                    内存限制(KB)";
+    strVar += "                <\/td>";
+    strVar += "                <td>";
+    strVar += "                    ${problem.test_setting.memory_limit}";
+    strVar += "                <\/td>";
+    strVar += "            <\/tr>";
+    strVar += "            <tr>";
+    strVar += "                <td>";
+    strVar += "                    总时间限制(ms)";
+    strVar += "                <\/td>";
+    strVar += "                <td>";
+    strVar += "                    ${problem.test_setting.time_limit_global}";
+    strVar += "                <\/td>";
+    strVar += "            <\/tr>";
+    strVar += "            <tr>";
+    strVar += "                <td>";
+    strVar += "                    每轮时间限制";
+    strVar += "                <\/td>";
+    strVar += "                <td>";
+    strVar += "                    {@each　problem.test_setting.time_limit_case as time}";
+    strVar += "                    <span>${time},<\/span>";
+    strVar += "                    {@/each}";
+    strVar += "                <\/td>";
+    strVar += "            <\/tr>";
+    strVar += "";
+    strVar += "            <\/tbody>";
+    strVar += "";
+    strVar += "        <\/table>";
+    strVar += "    <\/div>";
+    strVar += "    <a class=\"underline-a\" onclick=\"submissionController.showSubmissionEditor()\" style=\"margin-right: 30px\">编辑答案<\/a>";
+    strVar += "    <a class=\"underline-a\" onclick=\"discussionController.showDiscussionList(${problem.id})\">查看讨论(${problem.discuss_count}条)<\/a>";
+    strVar += "<\/article>";
+    strVar += "<section id=\"create-submission-section\">";
+    strVar += "    <table class=\"styled-table\" style=\"width: 600px;\">";
+    strVar += "        <thead>";
+    strVar += "            <tr style=\"visibility: hidden\">";
+    strVar += "                <th width=\"200\"><\/th>";
+    strVar += "                <th width=\"400\"><\/th>";
+    strVar += "            <\/tr>";
+    strVar += "        <\/thead>";
+    strVar += "        <tbody>";
+    strVar += "            <tr>";
+    strVar += "                <td>";
+    strVar += "                    选择语言";
+    strVar += "                <\/td>";
+    strVar += "                <td>";
+    strVar += "                    <select name=\"select-language\" id=\"select-language\">";
+    strVar += "                        {@each problem.test_setting.support_lang as lang}";
+    strVar += "                        <option value=\"${lang}\">${lang}<\/option>";
+    strVar += "                        {@/each}";
+    strVar += "                    <\/select>";
+    strVar += "                <\/td>";
+    strVar += "            <\/tr>";
+    strVar += "            <tr>";
+    strVar += "                <td colspan=\"2\">";
+    strVar += "                    <textarea name=\"code\" id=\"create-submission-code\" cols=\"30\" rows=\"20\"><\/textarea>";
+    strVar += "                <\/td>";
+    strVar += "            <\/tr>";
+    strVar += "        <\/tbody>";
+    strVar += "    <\/table>";
+    strVar += "    <a class=\"button submit\" onclick=\"submissionController.submit(${problem.id});\" style=\"margin-right: 20px;\">提交<\/a>";
+    strVar += "    <a class=\"button cancel\" onclick=\"submissionController.showSubmissionEditor();\">取消<\/a>";
+    strVar += "<\/section>";
+    strVar += "<section id=\"discussion-section\">";
+    strVar += "";
+    strVar += "<\/section>";
+    ProblemModel.prototype.template= strVar;
 })();
 
 //
@@ -128,7 +290,7 @@ ProblemModel.prototype.RETRIEVE = function (id, callback) {
                     }
                     else {
                         topMessage({
-                            Message: Data.error,
+                            Message: Data.message,
                             Type: 'fail'
                         });
                         return true;
@@ -164,11 +326,11 @@ ProblemModel.prototype.ADD = function(data, callback) {
             if(Data.code == 1){
                 topMessage({
                     Message: '创建成功',
-                    Type: 'fail'
+                    Type: 'success'
                 });
             }else {
                 topMessage({
-                    Message: Data.Message,
+                    Message: Data.message,
                     Type: 'fail'
                 });
             }

@@ -200,9 +200,9 @@ function setRouteController() {
                     setActiveLink();
                     //setActiveLink();
                     hideMainSections();
-                    if(window.createGroupControllerEntity == undefined){
+                    if (window.createGroupControllerEntity == undefined) {
                         window.createGroupControllerEntity = new createGroupController(groupListPageParam);
-                    }else{
+                    } else {
                         window.createGroupControllerEntity = new createGroupController(groupListPageParam);
                         window.createGroupControllerEntity.showPage();
                     }
@@ -350,7 +350,7 @@ function setRouteController() {
             url: '/user/',
             fun: [
                 function (isReplace, path) {
-
+                    jump(isReplace,path);
                     if (document.getElementsByClassName('active-modal').length > 0) {
                         document.getElementsByClassName('active-modal')[0].classList.remove('active-modal');
                     }
@@ -363,10 +363,13 @@ function setRouteController() {
                         //说明是默认  本用户
                         hideMainSections();
                         UserInfoController.showCurrentUserInfo();
-                        UserInfoController.bind();
                     }
                     else {
                         //说明是某个具体用户的
+                        hideMainSections();
+                        var id =  parseInt(jRouter.getUrlParam(path).params[1],10);
+                        UserInfoController.showCurrentUserInfo(id);
+                        UserInfoController.showCurrentUserInfo(id);
                         //TODO 补全用户名解析部分
                     }
                     jump(isReplace, path);
@@ -442,11 +445,11 @@ function setRouteController() {
             url: '/createProblem/',
             fun: [
                 function (isReplace, path) {
-                    jump(isReplace,path);
+                    jump(isReplace, path);
                     var groupParam = parseInt(jRouter.getUrlParam(path).params[1]);
                     hideMainSections();
                     if (typeof window.createProblemControllerEntity == 'undefined') {
-                        window.createProblemControllerEntity= new createProblemController();
+                        window.createProblemControllerEntity = new createProblemController();
                     }
                     window.createProblemControllerEntity.showPage();
                 }

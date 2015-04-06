@@ -33,14 +33,14 @@ ProblemListModel.prototype.init = function (ProblemListData) {
 //};
 
 //通过pageData获取分页信息
-ProblemListModel.prototype.RETRIEVE = function (pageData,group_id, callback) {
+ProblemListModel.prototype.RETRIEVE = function (pageData, group_id, callback) {
     var data = pageData;
-    if(group_id){
+    if (group_id) {
         data.group_id = group_id;
-    }else{
+    } else {
         data.group_id = -1;
     }
-    var url = data.group_id==-1 ? ProblemListModel.prototype.RetrievePath:ProblemListModel.prototype.groupRetrievePath;
+    var url = data.group_id == -1 ? ProblemListModel.prototype.RetrievePath : ProblemListModel.prototype.groupRetrievePath;
     data.user_id = window.currentUser == undefined ? cookieMethods.getCookie("user_id") : window.currentUser.user_id;
     $.ajax(
         {
@@ -49,20 +49,20 @@ ProblemListModel.prototype.RETRIEVE = function (pageData,group_id, callback) {
             type: ProblemListModel.prototype.Retrievemethod,
             async: false,
             dataType: "json",
-            beforeSend: function(request) {
+            beforeSend: function (request) {
                 var session_id = cookieMethods.getCookie("token");
                 var user_id = cookieMethods.getCookie("user_id");
-                if(user_id!=undefined) {
-                    request.setRequestHeader("user-Id",user_id);
+                if (user_id != undefined) {
+                    request.setRequestHeader("user-Id", user_id);
                 }
                 else {
-                    request.setRequestHeader("user-Id",-1);
+                    request.setRequestHeader("user-Id", -1);
                 }
-                if(session_id!=undefined) {
-                    request.setRequestHeader("Session-Id",session_id);
+                if (session_id != undefined) {
+                    request.setRequestHeader("Session-Id", session_id);
                 }
                 else {
-                    request.setRequestHeader("Session-Id",-1);
+                    request.setRequestHeader("Session-Id", -1);
                 }
 
             },

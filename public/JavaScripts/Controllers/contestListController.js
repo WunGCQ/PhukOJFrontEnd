@@ -18,7 +18,7 @@ contestListController.convertPageToSize = function (page) {
     return contestListController.start;
 };
 
-contestListController.showContestList = function (page,group_id) {
+contestListController.showContestList = function (page, group_id) {
     ContestListModel.prototype.loadTemplate();
     var startPosition = contestListController.convertPageToSize(page);
 
@@ -32,7 +32,7 @@ contestListController.showContestList = function (page,group_id) {
 
     contestListController.currentContestList = new ContestListModel();
 
-    contestListController.currentContestList.RETRIEVE(pageData,group_id, function() {
+    contestListController.currentContestList.RETRIEVE(pageData, group_id, function () {
         var contestListPageText = contestListController.currentContestList.renderPage();
         //contestListPageText += juicer(contestListPageText,{"page":{"page":contestListController.page}});
         $(contestListController.scopeBlock).html(contestListPageText);

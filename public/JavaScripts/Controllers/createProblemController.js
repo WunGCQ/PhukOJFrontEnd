@@ -1,23 +1,226 @@
 /**
  * Created by wcq on 15-3-26.
  */
-var createProblemController = function(group_id) {
+var createProblemController = function (group_id) {
     this.group_id = group_id;
     return this;
 };
 
 
-(function() {
+(function () {
 
     createProblemController.prototype = new ProblemModel();
     createProblemController.prototype.scope = document.getElementById("create-problem-section");
     createProblemController.prototype.templatePath = Model.XHRPathHead() + '/templates/newProblem.html';
-    createProblemController.prototype.template = "<style>#create-problem-table tbody td{border:1px solid #ccc;text-align:center}#create-problem-table tr{background:transparent!important}#problem-description{width:100%;height:300px;outline:0;resize:vertical}#problem-description:focus{border:1px solid #16a085;box-shadow:0 0 6px 1px rgba(27,212,179,.1)}#problem-preview{width:100%;box-sizing:border-box;padding:10px;text-align:left}<\/style><form id=\"create-problem-form\"><table id=\"create-problem-table\" class=\"styled-table\" style=\"width:800px\"><thead><tr><th colspan=\"2\"><h2>创建题目<\/h2><\/th><\/tr><tr style=\"display:none\"><th width=\"400\"><\/th><th width=\"400\"><\/th><\/tr><\/thead><tbody><tr><td colspan=\"2\"><input type=\"text\" name=\"title\" class=\"\" placeholder=\"题目标题\" required><\/td><\/tr><tr><td>是否公开<\/td><td><select name=\"access_level\"><option value=\"0\" selected>不公开<\/option><option value=\"1\">小组内部可见<\/option><option value=\"2\">公开<\/option><\/select><\/td><\/tr><tr><td><textarea id=\"problem-description\" name=\"description\" class=\"\" placeholder=\"题目描述\" required><\/textarea><\/td><td style=\"vertical-align:top\"><div id=\"problem-preview\" class=\"markdown-body\"><\/div><\/td><\/tr><tr><td>文件版本<\/td><td><input type=\"text\" name=\"files_version\" placeholder=\"文件版本\"><\/td><\/tr><tr><td>支持语言<\/td><td><label><input type=\"checkbox\" name=\"support_lang\" placeholder=\"支持语言\" value=\"C\"> C<\/label><label><input type=\"checkbox\" name=\"support_lang\" placeholder=\"支持语言\" value=\"CPP\"> C++<\/label><label><input type=\"checkbox\" name=\"support_lang\" placeholder=\"支持语言\" value=\"JAVA\"> JAVA<\/label><\/td><\/tr><tr><td>内存限制<\/td><td><input type=\"text\" name=\"memory_limit\" placeholder=\"内存限制\"><\/td><\/tr><tr><td>总时间限制<\/td><td><input type=\"text\" name=\"time_limit_global\" placeholder=\"总时间限制\"><\/td><\/tr><tr><td>每轮时间限制<\/td><td><input type=\"text\" name=\"time_limit_case\" placeholder=\"每轮时间限制\"><\/td><\/tr><tr><td>标准输入文件 <a class=\"button\" onclick=\"addFileInputs(&quot;input-file-scope&quot;,&quot;standard_input_files&quot;)\">添加文件<\/a><script>function addFileInputs(e,t){var n=(new Date).getTime();$(\"#\"+e).append('<input type=\"file\" name=\"'+t+n+'\" style=\"width:240px\"/>')}<\/script><\/td><td id=\"input-file-scope\" style=\"width:300px!important\"><input type=\"file\" name=\"standard_input_files\" placeholder=\"标准输入文件\" style=\"width:240px\"><\/td><\/tr><tr><td style=\"width:300px!important\">标准输出文件 <a class=\"button\" onclick=\"addFileInputs(&quot;output-file-scope&quot;,&quot;standard_output_files&quot;)\">添加文件<\/a><\/td><td id=\"output-file-scope\"><input type=\"file\" name=\"standard_output_files\" placeholder=\"标准输出文件\" style=\"width:240px\"><\/td><\/tr><tr><td>每轮权重<\/td><td><input type=\"text\" name=\"round_weight\" placeholder=\"每轮权重\"><\/td><\/tr><tr><td>通过条件<\/td><td><input type=\"text\" name=\"compare_ac_level\" placeholder=\"通过条件\"><\/td><\/tr><tr><td>大小写错误敏感<\/td><td><input type=\"text\" name=\"compare_pre_case_insensitive\" placeholder=\"大小写错误敏感\"><\/td><\/tr><tr><td>特殊检测<\/td><td><input type=\"text\" name=\"compare_special\" placeholder=\"特殊检测\"><\/td><\/tr><tr><td colspan=\"2\" style=\"text-align:center\"><a class=\"button submit\" style=\"margin-right: 50px;\">提交<\/a> <a class=\"button back\" onclick=\"history.back()\">返回<\/a><\/td><\/tr><\/tbody><\/table><\/form>";
+    var strVar = "";
+    strVar += "<style>";
+    strVar += "    #create-problem-table {";
+    strVar += "";
+    strVar += "    }";
+    strVar += "";
+    strVar += "    #create-problem-table tbody td {";
+    strVar += "        border: 1px solid #ccc;";
+    strVar += "        text-align: center;";
+    strVar += "    }";
+    strVar += "";
+    strVar += "    #create-problem-table tr {";
+    strVar += "        background: transparent !important;";
+    strVar += "    }";
+    strVar += "";
+    strVar += "    #problem-description {";
+    strVar += "        width: 100%;";
+    strVar += "        height: 300px;";
+    strVar += "        outline: none;";
+    strVar += "        resize: vertical;";
+    strVar += "    }";
+    strVar += "";
+    strVar += "    #problem-description:focus {";
+    strVar += "        border: 1px solid #16a085;";
+    strVar += "        box-shadow: 0 0 6px 1px rgba(27, 212, 179, .1);";
+    strVar += "    }";
+    strVar += "";
+    strVar += "    #problem-preview {";
+    strVar += "        width: 100%;";
+    strVar += "        box-sizing: border-box;";
+    strVar += "        padding: 10px;";
+    strVar += "        text-align: left;";
+    strVar += "    }";
+    strVar += "";
+    strVar += "<\/style>";
+    strVar += "<form id=\"create-problem-form\">";
+    strVar += "    <table id=\"create-problem-table\" class=\"styled-table\" style=\"width: 800px\">";
+    strVar += "        <thead>";
+    strVar += "        <tr>";
+    strVar += "            <th colspan=\"2\">";
+    strVar += "                <h2>创建题目<\/h2>";
+    strVar += "            <\/th>";
+    strVar += "        <\/tr>";
+    strVar += "        <tr style=\"display: none;\">";
+    strVar += "            <th width=\"400\"><\/th>";
+    strVar += "            <th width=\"400\"><\/th>";
+    strVar += "        <\/tr>";
+    strVar += "        <\/thead>";
+    strVar += "        <tbody>";
+    strVar += "        <tr>";
+    strVar += "            <td colspan=\"2\">";
+    strVar += "                <input type=\"text\" name=\"title\" class=\"\" placeholder=\"题目标题\" required=\"required\"/>";
+    strVar += "            <\/td>";
+    strVar += "        <\/tr>";
+    strVar += "        <tr>";
+    strVar += "            <td>";
+    strVar += "                是否公开";
+    strVar += "            <\/td>";
+    strVar += "            <td>";
+    strVar += "                <select name=\"access_level\">";
+    strVar += "                    <option value=\"0\" selected>不公开<\/option>";
+    strVar += "                    <option value=\"1\">小组内部可见<\/option>";
+    strVar += "                    <option value=\"2\">公开<\/option>";
+    strVar += "                <\/select>";
+    strVar += "            <\/td>";
+    strVar += "        <\/tr>";
+    strVar += "";
+    strVar += "        <tr>";
+    strVar += "            <td>";
+    strVar += "                <textarea id=\"problem-description\" name=\"description\" class=\"\" placeholder=\"题目描述\"";
+    strVar += "                          required=\"required\"><\/textarea>";
+    strVar += "            <\/td>";
+    strVar += "            <td style=\"vertical-align: top;\">";
+    strVar += "                <div id=\"problem-preview\" class=\"markdown-body\">";
+    strVar += "                <\/div>";
+    strVar += "            <\/td>";
+    strVar += "        <\/tr>";
+    strVar += "        ";
+    strVar += "        <tr>";
+    strVar += "            <td>";
+    strVar += "                支持语言";
+    strVar += "            <\/td>";
+    strVar += "            <td>";
+    strVar += "                <label>";
+    strVar += "                    <input type=\"checkbox\" name=\"support_lang\" placeholder=\"支持语言\" value=\"C\"/>";
+    strVar += "                    C";
+    strVar += "                <\/label>";
+    strVar += "                <label>";
+    strVar += "                    <input type=\"checkbox\" name=\"support_lang\" placeholder=\"支持语言\" value=\"CPP\"/>";
+    strVar += "                    C++";
+    strVar += "                <\/label>";
+    strVar += "                <label>";
+    strVar += "                    <input type=\"checkbox\" name=\"support_lang\" placeholder=\"支持语言\" value=\"JAVA\"/>";
+    strVar += "                    JAVA";
+    strVar += "                <\/label>";
+    strVar += "            <\/td>";
+    strVar += "        <\/tr>";
+    strVar += "        <tr>";
+    strVar += "            <td>";
+    strVar += "                评测轮次";
+    strVar += "            <\/td>";
+    strVar += "            <td>";
+    strVar += "                <input type=\"text\" name=\"test_round_count\" placeholder=\"评测轮次\"/>";
+    strVar += "            <\/td>";
+    strVar += "        <\/tr>";
+    strVar += "        <tr>";
+    strVar += "            <td>";
+    strVar += "                内存限制(KB)";
+    strVar += "            <\/td>";
+    strVar += "            <td>";
+    strVar += "                <input type=\"text\" name=\"memory_limit\" placeholder=\"内存限制\"/>";
+    strVar += "            <\/td>";
+    strVar += "        <\/tr>";
+    strVar += "        <tr>";
+    strVar += "            <td>";
+    strVar += "                总时间限制(ms)";
+    strVar += "            <\/td>";
+    strVar += "            <td>";
+    strVar += "                <input type=\"text\" name=\"time_limit_global\" placeholder=\"总时间限制\"/>";
+    strVar += "            <\/td>";
+    strVar += "        <\/tr>";
+    strVar += "        <tr>";
+    strVar += "            <td>";
+    strVar += "                每轮时间限制(ms)";
+    strVar += "            <\/td>";
+    strVar += "            <td>";
+    strVar += "                <input type=\"text\" name=\"time_limit_case\" placeholder=\"每轮时间限制\"/>";
+    strVar += "            <\/td>";
+    strVar += "        <\/tr>";
+    strVar += "        <tr>";
+    strVar += "            <td>";
+    strVar += "                标准输入文件";
+    strVar += "                <a class=\"button\" onclick=\"addFileInputs('input-file-scope','standard_input_files')\">添加文件<\/a>";
+    strVar += "                <script>";
+    strVar += "                    function addFileInputs(scopeId, name) {";
+    strVar += "                        var t = new Date().getTime();";
+    strVar += "                        $(\"#\" + scopeId).append('<input type=\"file\" name=\"' + name + t + '\" style=\"width:240px\"/>');";
+    strVar += "                    }";
+    strVar += "                <\/script>";
+    strVar += "            <\/td>";
+    strVar += "            <td id=\"input-file-scope\" style=\"width:300px !important;\">";
+    strVar += "                <input type=\"file\" name=\"standard_input_files\" placeholder=\"标准输入文件\" style=\"width:240px\"/>";
+    strVar += "            <\/td>";
+    strVar += "";
+    strVar += "        <\/tr>";
+    strVar += "        <tr>";
+    strVar += "            <td style=\"width:300px !important;\">";
+    strVar += "                标准输出文件";
+    strVar += "                <a class=\"button\" onclick=\"addFileInputs('output-file-scope','standard_output_files')\">添加文件<\/a>";
+    strVar += "";
+    strVar += "            <\/td>";
+    strVar += "            <td id=\"output-file-scope\">";
+    strVar += "                <input type=\"file\" name=\"standard_output_files\" placeholder=\"标准输出文件\" style=\"width:240px\"/>";
+    strVar += "            <\/td>";
+    strVar += "        <\/tr>";
+    strVar += "        <tr>";
+    strVar += "            <td>";
+    strVar += "                每轮权重";
+    strVar += "            <\/td>";
+    strVar += "            <td>";
+    strVar += "                <input type=\"text\" name=\"round_weight\" placeholder=\"每轮权重\"/>";
+    strVar += "            <\/td>";
+    strVar += "        <\/tr>";
+    strVar += "        <tr>";
+    strVar += "            <td>";
+    strVar += "                通过条件";
+    strVar += "            <\/td>";
+    strVar += "            <td>";
+    strVar += "                <input type=\"text\" name=\"compare_ac_level\" placeholder=\"通过条件\"/>";
+    strVar += "            <\/td>";
+    strVar += "        <\/tr>";
+    strVar += "        <tr>";
+    strVar += "            <td>";
+    strVar += "                大小写错误敏感";
+    strVar += "            <\/td>";
+    strVar += "            <td>";
+    strVar += "                <input type=\"text\" name=\"compare_pre_case_insensitive\" placeholder=\"大小写错误敏感\"/>";
+    strVar += "            <\/td>";
+    strVar += "        <\/tr>";
+    strVar += "        <tr>";
+    strVar += "            <td>";
+    strVar += "                特殊检测";
+    strVar += "            <\/td>";
+    strVar += "            <td>";
+    strVar += "                <input type=\"text\" name=\"compare_special\" placeholder=\"特殊检测\"/>";
+    strVar += "            <\/td>";
+    strVar += "        <\/tr>";
+    strVar += "        <tr>";
+    strVar += "            <td colspan=\"2\" style=\"text-align: center\">";
+    strVar += "                <a class=\"button submit\">";
+    strVar += "                    提交";
+    strVar += "                <\/a>";
+    strVar += "                <a class=\"button preview\" style=\"margin: auto 20px;\">";
+    strVar += "                    预览";
+    strVar += "                <\/a>";
+    strVar += "                <a class=\"button back\" onclick=\"history.back();\">";
+    strVar += "                    返回";
+    strVar += "                <\/a>";
+    strVar += "            <\/td>";
+    strVar += "        <\/tr>";
+    strVar += "        <\/tbody>";
+    strVar += "    <\/table>";
+    strVar += "<\/form>";
+    strVar += "";
+    createProblemController.prototype.template = strVar;
 })();
 
 
-
-createProblemController.prototype.showPage = function() {
+createProblemController.prototype.showPage = function () {
     var scope = this.scope;
     var groupListPageParam = jRouter.getUrlParam(window.location.href).params[1] - 0;
     this.group_id = groupListPageParam;
@@ -28,16 +231,16 @@ createProblemController.prototype.showPage = function() {
     jRouter.parseAnchor(AnchorsToBind);
     this.divBlock = document.getElementById("create-problem-section");
     this.submitButton = this.divBlock.getElementsByClassName('submit')[0];
-    this.submitButton.addEventListener('click', function() {
+    this.submitButton.addEventListener('click', function () {
         createProblemControllerEntity.createProblem();
     });
     this.bindTextAreaListener();
 
 };
-createProblemController.prototype.bindTextAreaListener = function() {
+createProblemController.prototype.bindTextAreaListener = function () {
     var textarea = document.getElementById('problem-description');
-    $(textarea).each(function() {
-        $(this).keydown(function(eve) {
+    $(textarea).each(function () {
+        $(this).keydown(function (eve) {
             if (eve.target != this)
                 return;
             if (eve.keyCode == 13)
@@ -47,7 +250,7 @@ createProblemController.prototype.bindTextAreaListener = function() {
                 insertAtCursor(this, "  ");
                 this.returnValue = false;
             }
-        }).keyup(function(eve) {
+        }).keyup(function (eve) {
             if (eve.target == this && eve.keyCode == 13) {
             }
             var text = textarea.value;
@@ -141,7 +344,7 @@ function getCursorPos(inputObj) {
     }
 }
 
-createProblemController.prototype.createProblem = function() {
+createProblemController.prototype.createProblem = function () {
     if (this.checkData()) {
         var data = this.getSendFormData();
         if (window.currentProblem == undefined || window.currentProblem == null) {
@@ -152,7 +355,7 @@ createProblemController.prototype.createProblem = function() {
     }
 };
 
-createProblemController.prototype.getSendFormData = function() {
+createProblemController.prototype.getSendFormData = function () {
     var fd = new FormData();
     var f = this.getForm().getElementsByTagName('input');
     for (var i = 0; i < f.length; i++) {
@@ -191,7 +394,7 @@ createProblemController.prototype.getSendFormData = function() {
 
 };
 
-createProblemController.prototype.getFilesArray = function(formId, name) {
+createProblemController.prototype.getFilesArray = function (formId, name) {
     var arr = [];
     for (var i = 0; i < $('#' + formId).get(0)[name].files.length; i++) {
         arr.push($('#' + formId).get(0)[name].files[i]);
@@ -200,10 +403,7 @@ createProblemController.prototype.getFilesArray = function(formId, name) {
 };
 
 
-
-
-
-createProblemController.prototype.getInput = function(name) {
+createProblemController.prototype.getInput = function (name) {
     if (this.divBlock.querySelectorAll('input[name="' + name + '"]')) {
         return this.divBlock.querySelectorAll('input[name="' + name + '"]')[0];
     }
@@ -213,10 +413,10 @@ createProblemController.prototype.getInput = function(name) {
 
 };
 
-createProblemController.prototype.getForm = function() {
+createProblemController.prototype.getForm = function () {
     return $(this.divBlock).children('form').get(0);
 };
-createProblemController.prototype.getFormData = function() {
+createProblemController.prototype.getFormData = function () {
     this.problemData = {};
     this.form = document.querySelectorAll("#create-problem-section form")[0];
     for (var i = 0; i < this.form.length; i++) {
@@ -226,7 +426,10 @@ createProblemController.prototype.getFormData = function() {
 
         } else {
 
-            this.problemData[this.form[i].name] = {"value": this.form[i].value,"placeholder": this.form[i].getAttribute("placeholder")};
+            this.problemData[this.form[i].name] = {
+                "value": this.form[i].value,
+                "placeholder": this.form[i].getAttribute("placeholder")
+            };
 
         }
     }
@@ -234,7 +437,7 @@ createProblemController.prototype.getFormData = function() {
 };
 
 //设置表单样式
-createProblemController.prototype.setInputError = function(name) {
+createProblemController.prototype.setInputError = function (name) {
     //已经有的话先去掉，这样可以保证有shake动效触发
     if (this.getInput(name)) {
         this.getInput(name).classList.remove('error-input');
@@ -244,7 +447,7 @@ createProblemController.prototype.setInputError = function(name) {
 
 };
 
-createProblemController.prototype.removeInputError = function(name) {
+createProblemController.prototype.removeInputError = function (name) {
     if (this.getInput(name)) {
         this.getInput(name).classList.remove('error-input');
         this.getInput(name).classList.remove('shake');
@@ -253,9 +456,8 @@ createProblemController.prototype.removeInputError = function(name) {
 };
 
 
-
 //检查数据合法与否（不是内容的正确性而是格式的合理性）
-createProblemController.prototype.checkData = function() {
+createProblemController.prototype.checkData = function () {
     //每次检查前都要重新获取一次数据
     this.getFormData();
     var isDataLegal = true;
@@ -278,8 +480,6 @@ createProblemController.prototype.checkData = function() {
 
     }
 
-    //var des = this.problemData.description;
-    //this.problemData.description = escape2Html(des);
     return isDataLegal;
 };
 

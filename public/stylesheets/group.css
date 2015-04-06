@@ -11,10 +11,12 @@
     cursor: not-allowed;
     background-color: #aaa;
 }
+
 .button.disable:hover {
     background-color: #aaa;
 }
-#load-membership,#load-application {
+
+#load-membership, #load-application {
     display: block;
     margin-top: 5px;
     width: 100%;
@@ -29,10 +31,12 @@
     box-sizing: border-box;
     transition: all ease 0.3s;
 }
+
 #load-membership:hover, #load-application:hover {
     background-color: #1bd4b3;
 }
-#membership-section,#application-section {
+
+#membership-section, #application-section {
     display: block;
     clear: both;
     position: Relative;
@@ -49,7 +53,7 @@
     font-size: 0;
 }
 
-#group-nav .nav-item{
+#group-nav .nav-item {
     display: inline-block;
     vertical-align: top;
     margin: auto;
@@ -61,22 +65,25 @@
     text-align: center;
     color: #7F8C8D;
     cursor: pointer;
-    border-top:1px solid transparent;
+    border-top: 1px solid transparent;
     border-left: 1px solid transparent;
     border-right: 1px solid transparent;
     transition: all ease .3s;
     border-collapse: collapse;
 }
-#group-nav .nav-item .fa{
+
+#group-nav .nav-item .fa {
     margin-right: 8px;
     font-size: 18px;
 }
-#group-nav .nav-item.active{
+
+#group-nav .nav-item.active {
     color: #16A085;
-    border-top:1px solid #16A085;
+    border-top: 1px solid #16A085;
     border-left: 1px solid #16A085;
     border-right: 1px solid #16A085;
 }
+
 #group-nav .nav-item.active:after {
     content: "";
     display: block;
@@ -86,16 +93,19 @@
     margin-top: -2px;
     height: 5px;
 }
+
 #group-nav
 #group-nav .nav-item .fa, #group-nav .nav-item span {
     font-size: inherit;
     color: inherit;
 }
+
 .group-tab-page {
     display: block;
     display: none;
     margin: 10px auto 20px auto;
 }
-.group-tab-page.active{
+
+.group-tab-page.active {
     display: block;
 }

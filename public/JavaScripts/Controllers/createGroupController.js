@@ -1,20 +1,19 @@
 /**
  * Created by wcq on 15-3-26.
  */
-var createGroupController = function(){
+var createGroupController = function () {
     return this;
 };
 createGroupController.prototype = new Model();
-createGroupController.prototype.templatePath = Model.XHRPathHead()+'/templates/newGroup.html';
+createGroupController.prototype.templatePath = Model.XHRPathHead() + '/templates/newGroup.html';
 
 createGroupController.prototype.template = '<form action="#"><table id="create-group-table" class="styled-table" style="width:320px"><thead><tr><th colspan="2"><h2>创建小组</h2></th></tr><tr style="display:none"><th width="80"></th><th width="240"></th></tr></thead><tbody><tr><td>小组名称</td><td><input type="text" name="name" class="" placeholder="小组名称" required></td></tr><tr><td>小组描述</td><td><input type="text" name="description" class="" placeholder="描述一下你的小组～" required></td></tr><tr><td colspan="2"><a class="button submit">提交</a> <a class="button back" onclick="history.back()">返回</a></td></tr></tbody></table></form>';
 
 
+createGroupController.prototype.showPage = function () {
 
-createGroupController.prototype.showPage = function(){
 
-
-    var scope =  document.getElementById("create-group-section");
+    var scope = document.getElementById("create-group-section");
     var text = this.loadTemplate();
     $(scope).html(text);
     scope._css('display', 'block');
@@ -22,24 +21,21 @@ createGroupController.prototype.showPage = function(){
     jRouter.parseAnchor(AnchorsToBind);
     this.divBlock = document.getElementById("create-group-section");
     this.submitButton = this.divBlock.getElementsByClassName('submit')[0];
-    this.submitButton.addEventListener('click',function(){
+    this.submitButton.addEventListener('click', function () {
         createGroupControllerEntity.createGroup();
     });
 
 
 };
-createGroupController.prototype.createGroup = function(){
+createGroupController.prototype.createGroup = function () {
     if (this.checkData()) {
         var data = this.groupData;
-        if(window.currentGroup == undefined || window.currentGroup == null) {
+        if (window.currentGroup == undefined || window.currentGroup == null) {
             window.currentGroup = new GroupModel();
         }
         window.currentGroup.ADD(data);
     }
 };
-
-
-
 
 
 createGroupController.prototype.getInput = function (name) {

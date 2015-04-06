@@ -59,8 +59,8 @@ GroupModel.prototype.RETRIEVE = function (group_id, callback) {
         var data = null;
     } else {
         var data = {'group_id': group_id};
-        var user_id = window.currentUser == undefined? cookieMethods.getCookie("user_id"):window.currentUser.user_id;
-        if(user_id!=undefined) {
+        var user_id = window.currentUser == undefined ? cookieMethods.getCookie("user_id") : window.currentUser.user_id;
+        if (user_id != undefined) {
             data["user_id"] = user_id;
         }
         else {
@@ -96,20 +96,20 @@ GroupModel.prototype.RETRIEVE = function (group_id, callback) {
                 type: GroupModel.prototype.Retrievemethod,
                 async: false,
                 dataType: "json",
-                beforeSend: function(request) {
+                beforeSend: function (request) {
                     var session_id = cookieMethods.getCookie("token");
                     var user_id = cookieMethods.getCookie("user_id");
-                    if(user_id!=undefined) {
-                        request.setRequestHeader("user-Id",user_id);
+                    if (user_id != undefined) {
+                        request.setRequestHeader("user-Id", user_id);
                     }
                     else {
-                        request.setRequestHeader("user-Id",-1);
+                        request.setRequestHeader("user-Id", -1);
                     }
-                    if(session_id!=undefined) {
-                        request.setRequestHeader("Session-Id",session_id);
+                    if (session_id != undefined) {
+                        request.setRequestHeader("Session-Id", session_id);
                     }
                     else {
-                        request.setRequestHeader("Session-Id",-1);
+                        request.setRequestHeader("Session-Id", -1);
                     }
 
                 },
@@ -159,7 +159,7 @@ GroupModel.prototype.ADD = function (data, callback) {
         var data = data;
         data["creater_id"] = window.currentUser.user_id || -1;
     }
-    if(1) {
+    if (1) {
         $.ajax(
             {
                 url: GroupModel.prototype.AddPath,
@@ -167,20 +167,20 @@ GroupModel.prototype.ADD = function (data, callback) {
                 type: GroupModel.prototype.Retrievemethod,
                 async: false,
                 dataType: "json",
-                beforeSend: function(request) {
+                beforeSend: function (request) {
                     var session_id = cookieMethods.getCookie("token");
                     var user_id = cookieMethods.getCookie("user_id");
-                    if(user_id!=undefined) {
-                        request.setRequestHeader("user-Id",user_id);
+                    if (user_id != undefined) {
+                        request.setRequestHeader("user-Id", user_id);
                     }
                     else {
-                        request.setRequestHeader("user-Id",-1);
+                        request.setRequestHeader("user-Id", -1);
                     }
-                    if(session_id!=undefined) {
-                        request.setRequestHeader("Session-Id",session_id);
+                    if (session_id != undefined) {
+                        request.setRequestHeader("Session-Id", session_id);
                     }
                     else {
-                        request.setRequestHeader("Session-Id",-1);
+                        request.setRequestHeader("Session-Id", -1);
                     }
 
                 },

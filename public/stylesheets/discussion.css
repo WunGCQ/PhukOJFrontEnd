@@ -1,0 +1,30 @@
+.discussion {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.discussion-content, .article-box {
+    padding: 10px;
+    background-color: #fff;
+    box-shadow:  0 1px 4px rgba(0, 0, 0, 0.27), 0 0 60px rgba(0, 0, 0, 0.04) inset;
+}
+#create-discussion-div {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    min-height: 200px;
+}
+
+
+/*.markdown-body.discussion-content:before {*/
+    /*-webkit-transform: skew(-15deg) rotate(-6deg);*/
+    /*-moz-transform: skew(-15deg) rotate(-6deg);*/
+    /*transform: skew(-15deg) rotate(-6deg);*/
+    /*left: 15px;*/
+/*}*/
+/*.discussion-content:after {*/
+    /*-webkit-transform: skew(15deg) rotate(6deg);*/
+    /*-moz-transform: skew(15deg) rotate(6deg);*/
+    /*transform: skew(15deg) rotate(6deg);*/
+    /*right: 15px;*/
+/*}*/

@@ -14,6 +14,7 @@ UserInfoController.showUserInfoTab = function (id, event) {
     for (var i = 0; i < userInfoTabs.length; i++) {
         userInfoTabs[i].style['display'] = 'none';
     }
+    UserInfoController.bind();
     document.getElementById(id).style['display'] = 'block';
 };
 
@@ -80,7 +81,6 @@ UserInfoController.bind = function () {
             UserInfoController.changeUserInfoValue(this);
         });
     }
-
     //刷新a标签，绑定事件
     //提交事件已经写在路由地址里面啦~
     jRouter.parseAnchor();
@@ -201,33 +201,75 @@ UserInfoController.updateUserPWD = function () {
 };
 
 //资料面板
-UserInfoController.showCurrentUserInfo = function () {
-    //如果还没加载过这个模块
-    if(window.currentUser) {
-        if (!window.currentUser.isUserInfoShown) {
-            //由于UserModel的构造函数决定了一定已经有模板了
-            var text = window.currentUser.renderPage();
-            //document.getElementById('user-info-section').innerHTML = text;
+UserInfoController.showCurrentUserInfo = function (user_id) {
+    //如果传入参数，说明是其他用户的
+    if(user_id){
+        var temp_user = new UserModel();
+        temp_user.RETRIEVE({"user_id":user_id},function(data){
+            temp_user.init(data.user);
+            temp_user.modelData.isEditable = false;
+            var text = temp_user.renderPage();
             $('#user-info-section').html(text);
-            window.currentUser.isUserInfoShown = true;
-        }
-        //如果已经加载过这个模块
-        else {
-            //就不用做这些破事儿了
-        }
-    } else {
-        if(cookieMethods.getCookie("isLogin")=="true") {
-            var username = cookieMethods.getCookie("username");
-            var user_id  = cookieMethods.getCookie("user_id");
-            window.currentUser = new UserModel();
-            window.currentUser.RETRIEVE({"user_id":user_id});
-            var text = window.currentUser.renderPage();
-            $('#user-info-section').html(text);
-            window.currentUser.isUserInfoShown = true;
-        }
+            UserInfoController.bind();
+        });
+
+    }
+    else{ //若否则说明是自己的
+        //如果还没加载过这个模块
+
+            if (cookieMethods.getCookie("isLogin") == "true") {
+                var username = cookieMethods.getCookie("username");
+                var user_id = cookieMethods.getCookie("user_id");
+                window.currentUser = new UserModel();
+                window.currentUser.RETRIEVE({"user_id": user_id},function(){
+                    window.currentUser.modelData.isEditable = true;
+                    var text = window.currentUser.renderPage();
+                    $('#user-info-section').html(text);
+                    window.currentUser.isUserInfoShown = true;
+                    UserInfoController.bind();
+                });
+
+            }else{
+                topMessage({
+                    Message:'您尚未登陆，不能查看用户信息',
+                    Type:'fail'
+                })
+            }
+
 
     }
 
+
     document.getElementById('user-info-section').style["display"] = "block";
     return;
+};
+
+//检查登陆等一系列行为
+//已登录的补全信息，包括用户名补全等，未登录的不处理
+UserInfoController.checkIsLogin = function () {
+    var isLogin = cookieMethods.getCookie('isLogin');
+    if (isLogin == 'true') {
+        var username = cookieMethods.getCookie('username');
+        //是否已经有了当前的用户实例
+        if (window.currentUser == undefined) {
+            window.currentUser = new UserModel({"username": username});
+            var user_id = cookieMethods.getCookie("user_id");
+            var nickname = cookieMethods.getCookie("nickname");
+            window.currentUser.RETRIEVE({"user_id": user_id},function(){
+                window.currentUser.setUserBarLog(nickname);
+            });
+        }
+        else {
+            //什么也不做~
+        }
+        //给用护栏加上用户名
+        //UserModel.prototype.setUserBarLog(username);
+
+    }
+    else {
+        //默认就是未登录，什么也不用做
+        //var username = cookieMethods.getCookie('username');
+        //为登陆表单填充用户名
+        //LoginControllerEntity.getInput('username').value = username;
+    }
 };

@@ -41,14 +41,14 @@ function topMessage(arg) {
 
     //绑定点击关闭事件
     this.closeElement.addEventListener('click', function () {
-        var t =this.parentNode;
+        var t = this.parentNode;
         document.body.removeChild(t);
 
     });
-    var _this= this;
-    setTimeout(function(){
+    var _this = this;
+    setTimeout(function () {
         removeAllMessages();
-    },3000);
+    }, 3000);
 
     //
     return this;

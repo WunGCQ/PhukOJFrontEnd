@@ -1,0 +1,15 @@
+{@each discussion_list as discussion}
+<article class="discussion">
+
+    <div class="discussion-content markdown-body">
+        $${discussion.content}
+        <a class="underline-a" onclick="replyController.showReply(${problem_id},this);" style="text-indent: 15px;">回复(${discussion.reply_count})</a>
+    </div>
+    <section class="reply-list">
+
+    </section>
+</article>
+{@/each}
+<textarea placeholder="发表你的看法吧" id="create-discussion-div" ></textarea>
+<a class="underline-a">取消</a>
+<a class="button" onclick="discussionController.create_discussion(${problem_id});">发表</a>

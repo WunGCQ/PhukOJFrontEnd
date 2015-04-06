@@ -36,40 +36,14 @@ UserModel.prototype.init = function (UserData) {
     this.modelData = {'user': UserData};
     this.isUserInfoShown = false;
 };
-//检查登陆等一系列行为
-//已登录的补全信息，包括用户名补全等，未登录的不处理
-UserModel.prototype.checkIsLogin = function () {
-    var isLogin = cookieMethods.getCookie('isLogin');
-    if (isLogin == 'true') {
-        var username = cookieMethods.getCookie('username');
-        //是否已经有了当前的用户实例
-        if (typeof window.currentUser == "undefined") {
-            window.currentUser = new UserModel({"username":username});
-            var user_id = cookieMethods.getCookie("user_id");
-            window.currentUser.RETRIEVE({"user_id":user_id});
-            window.currentUser.setUserBarLog(username);
-        }
-        else {
-            //什么也不做~
-        }
-        //给用护栏加上用户名
-        //UserModel.prototype.setUserBarLog(username);
 
-    }
-    else {
-        //默认就是未登录，什么也不用做
-        //var username = cookieMethods.getCookie('username');
-        //为登陆表单填充用户名
-        //LoginControllerEntity.getInput('username').value = username;
-    }
-};
 
-UserModel.prototype.writeCookie = function (user_id,name, token) {
+UserModel.prototype.writeCookie = function (user_id, name, token) {
     var username = name || this.username;
     cookieMethods.setCookie('isLogin', 'true');
     cookieMethods.setCookie('user_id', user_id);
     cookieMethods.setCookie('username', name);
-    if(token!=undefined) {
+    if (token != undefined) {
         cookieMethods.setCookie('token', token);
     }
 
@@ -100,7 +74,7 @@ UserModel.prototype.logout = function () {
     if (isLogin == 'true') {
         if (typeof arg == 'undefined') {
             var data = {
-                "user_id":this.user_id
+                "user_id": this.user_id
             };
         }
         //向服务器发送注销的消息
@@ -110,20 +84,20 @@ UserModel.prototype.logout = function () {
                 data: data,
                 type: 'POST',
                 dataType: "json",
-                beforeSend: function(request) {
+                beforeSend: function (request) {
                     var session_id = cookieMethods.getCookie("token");
                     var user_id = cookieMethods.getCookie("user_id");
-                    if(user_id!=undefined) {
-                        request.setRequestHeader("user-Id",user_id);
+                    if (user_id != undefined) {
+                        request.setRequestHeader("user-Id", user_id);
                     }
                     else {
-                        request.setRequestHeader("user-Id",-1);
+                        request.setRequestHeader("user-Id", -1);
                     }
-                    if(session_id!=undefined) {
-                        request.setRequestHeader("Session-Id",session_id);
+                    if (session_id != undefined) {
+                        request.setRequestHeader("Session-Id", session_id);
                     }
                     else {
-                        request.setRequestHeader("Session-Id",-1);
+                        request.setRequestHeader("Session-Id", -1);
                     }
 
                 },
@@ -171,7 +145,7 @@ UserModel.prototype.logout = function () {
 
 
 //查找一个用户(获取用户信息)
-UserModel.prototype.RETRIEVE = function (arg) {
+UserModel.prototype.RETRIEVE = function (arg,callback) {
     if (typeof arg == 'undefined') {
         var data = null;
     } else {
@@ -185,27 +159,31 @@ UserModel.prototype.RETRIEVE = function (arg) {
             data: data,
             type: UserModel.prototype.Retrievemethod,
             dataType: "json",
-            beforeSend: function(request) {
+            beforeSend: function (request) {
                 var session_id = cookieMethods.getCookie("token");
                 var user_id = cookieMethods.getCookie("user_id");
-                if(user_id!=undefined) {
-                    request.setRequestHeader("user-Id",user_id);
+                if (user_id != undefined) {
+                    request.setRequestHeader("user-Id", user_id);
                 }
                 else {
-                    request.setRequestHeader("user-Id",-1);
+                    request.setRequestHeader("user-Id", -1);
                 }
-                if(session_id!=undefined) {
-                    request.setRequestHeader("Session-Id",session_id);
+                if (session_id != undefined) {
+                    request.setRequestHeader("Session-Id", session_id);
                 }
                 else {
-                    request.setRequestHeader("Session-Id",-1);
+                    request.setRequestHeader("Session-Id", -1);
                 }
 
             },
             success: function (Data) {
                 if (Data.code == 1) {
                     window.currentUser = new UserModel(Data.user);
-                    window.currentUser.writeCookie(Data.user.user_id,Data.user.username,Data.token);
+                    window.currentUser.writeCookie(Data.user.user_id, Data.user.username, Data.token);
+                    cookieMethods.setCookie("nickname",Data.user.nickname);
+                    if(typeof callback == 'function') {
+                        callback(Data);
+                    }
                     //TODO 后续工作包括了渲染用户设置的模板，用户下拉菜单等
                 }
                 else {
@@ -255,27 +233,27 @@ UserModel.prototype.UPDATE = function (arg) {
             data: data,
             type: UserModel.prototype.Updatemethod,
             dataType: "json",
-            beforeSend: function(request) {
+            beforeSend: function (request) {
                 var session_id = cookieMethods.getCookie("token");
                 var user_id = cookieMethods.getCookie("user_id");
-                if(user_id!=undefined) {
-                    request.setRequestHeader("user-Id",user_id);
+                if (user_id != undefined) {
+                    request.setRequestHeader("user-Id", user_id);
                 }
                 else {
-                    request.setRequestHeader("user-Id",-1);
+                    request.setRequestHeader("user-Id", -1);
                 }
-                if(session_id!=undefined) {
-                    request.setRequestHeader("Session-Id",session_id);
+                if (session_id != undefined) {
+                    request.setRequestHeader("Session-Id", session_id);
                 }
                 else {
-                    request.setRequestHeader("Session-Id",-1);
+                    request.setRequestHeader("Session-Id", -1);
                 }
 
             },
             success: function (Data) {
                 if (Data.code == 1) {
                     window.currentUser = new UserModel(Data.user);
-                    for(var x in data) {
+                    for (var x in data) {
                         window.currentUser[x] = data[x];
                         window.currentUser.modelData.user[x] = data[x];
                     }
@@ -319,20 +297,20 @@ UserModel.prototype.UPDATEPASSWORD = function (arg) {
             data: data,
             type: UserModel.prototype.Updatemethod,
             dataType: "json",
-            beforeSend: function(request) {
+            beforeSend: function (request) {
                 var session_id = cookieMethods.getCookie("token");
                 var user_id = cookieMethods.getCookie("user_id");
-                if(user_id!=undefined) {
-                    request.setRequestHeader("user-Id",user_id);
+                if (user_id != undefined) {
+                    request.setRequestHeader("user-Id", user_id);
                 }
                 else {
-                    request.setRequestHeader("user-Id",-1);
+                    request.setRequestHeader("user-Id", -1);
                 }
-                if(session_id!=undefined) {
-                    request.setRequestHeader("Session-Id",session_id);
+                if (session_id != undefined) {
+                    request.setRequestHeader("Session-Id", session_id);
                 }
                 else {
-                    request.setRequestHeader("Session-Id",-1);
+                    request.setRequestHeader("Session-Id", -1);
                 }
 
             },

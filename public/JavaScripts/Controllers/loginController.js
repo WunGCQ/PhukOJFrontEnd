@@ -92,7 +92,7 @@ var loginController = function () {
                 data: this.loginData,
                 type: 'POST',
                 dataType: "json",
-                beforeSend: function(request) {
+                beforeSend: function (request) {
                     var session_id = cookieMethods.getCookie("token");
                     //var user_id = cookieMethods.getCookie("user_id");
                     //if(user_id!=undefined) {
@@ -101,11 +101,11 @@ var loginController = function () {
                     //else {
                     //    request.setRequestHeader("user-Id",-1);
                     //}
-                    if(session_id!=undefined) {
-                        request.setRequestHeader("Session-Id",session_id);
+                    if (session_id != undefined) {
+                        request.setRequestHeader("Session-Id", session_id);
                     }
                     else {
-                        request.setRequestHeader("Session-Id",-1);
+                        request.setRequestHeader("Session-Id", -1);
                     }
 
                 },
@@ -125,14 +125,18 @@ var loginController = function () {
 
                         //window.currentUser.writeCookie(data.user.username);
                         //补全界面元素
-                        window.currentUser.setUserBarLog(data.user.username);
+                        window.currentUser.setUserBarLog(data.user.nickname);
 
                         //return data;
                         topMessage(
                             {
-                                Message: '登陆成功，跳转回首页',
+                                Message: '登陆成功，返回上一个页面',
                                 Type: 'success'
                             });
+                        setTimeout(function() {
+                            history.back()
+                        },500);
+
                     }
                     else {
                         topMessage({

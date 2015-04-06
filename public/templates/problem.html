@@ -1,19 +1,161 @@
-<article>
+<style>
+    #create-submission-section, #discussion-section{
+        display: block;
+        display: none;
+        width: 600px;
+
+    }
+    #create-submission-section td, #discussion-section td ,#create-submission-section tr, #discussion-section tr {
+        background-color: transparent;
+        border: none;
+    }
+    #create-submission-code {
+        width: 100%;
+        box-sizing: border-box;
+        background-color: #fff;
+        color: #555;
+        padding: 10px;
+        font-family: consolas,monospace;
+        font-size: 16px;
+        outline: none;
+        resize: vertical;
+    }
+    #create-submission-code:focus {
+        background: #333;
+        color: #fff;
+    }
+    #test-setting-table {
+        width: auto;
+    }
+    #test-setting-table tr>td:first-child {
+        text-align: right;
+        padding-right: 20px;
+    }
+    #test-setting-table tr>td:last-child {
+        text-align: left;
+        padding-left: 20px;
+        padding-right: 20px;
+        color: #16A085;
+    }
+    .underline-a {
+        color: #008080;
+        cursor: pointer;
+        transition: all ease .5s;
+    }
+    .underline-a:hover {
+        color: #16A085;
+        text-decoration: underline;
+    }
+</style>
+<article class="article-box markdown-body">
     <h2> ${problem.title}</h2>
     <input type="hidden" data-problem-id="{problem.id}"/>
     <span>编号: ${problem.id}</span>
-    <span>作者编号：${problem.creator_id} </span>
-    <span>所属小组:<a href="/group/${problem.belong_group.group_id}">${problem.belong_group.group_name}</a></span>
+    <span>作者：<a class="underline-a" href="/user/${problem.owner.owner_id}">${problem.owner.owner_name}</a> </span>
+    <span>所属小组:<a class="underline-a" href="/group/${problem.belong_group.group_id}">${problem.belong_group.group_name}</a></span>
     <time>最后编辑时间: ${problem.lastedit_time}</time>
-    <div class="test_setting">
-        <p>
-            <span>时间限制: ${problem.test_setting.time_limit}</span>
-            <span>测试轮数: ${problem.test_setting.round}</span>
-        </p>
-    </div>
+
     <section class="markdown-body">
         $${problem.description}
     </section>
+    <div style="margin: 10px auto">
+        <table  id="test-setting-table" class="styled-table">
+            <thead>
+            <tr style="visibility: hidden">
+                <th width="150"></th>
+                <th ></th>
+            </tr>
+            <tr>
+                <th colspan="2">
+                    测试参数
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    测试轮数
+                </td>
+                <td>
+                    ${problem.test_setting.test_round_count}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    每轮权重
+                </td>
+                <td>
+                    {@each　problem.test_setting.round_weight as weight}
+                    <span>${weight},</span>
+                    {@/each}
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    内存限制(KB)
+                </td>
+                <td>
+                    ${problem.test_setting.memory_limit}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    总时间限制(ms)
+                </td>
+                <td>
+                    ${problem.test_setting.time_limit_global}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    每轮时间限制
+                </td>
+                <td>
+                    {@each　problem.test_setting.time_limit_case as time}
+                    <span>${time},</span>
+                    {@/each}
+                </td>
+            </tr>
+
+            </tbody>
+
+        </table>
+    </div>
+    <a class="underline-a" onclick="submissionController.showSubmissionEditor()" style="margin-right: 30px">编辑答案</a>
+    <a class="underline-a" onclick="discussionController.showDiscussionList(${problem.id})">查看讨论(${problem.discuss_count}条)</a>
 </article>
-<a class="button">提交答案</a>
-<a class="button">查看讨论</a>
+<section id="create-submission-section">
+    <table class="styled-table" style="width: 600px;">
+        <thead>
+            <tr style="visibility: hidden">
+                <th width="200"></th>
+                <th width="400"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    选择语言
+                </td>
+                <td>
+                    <select name="select-language" id="select-language">
+                        {@each problem.test_setting.support_lang as lang}
+                        <option value="${lang}">${lang}</option>
+                        {@/each}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <textarea name="code" id="create-submission-code" cols="30" rows="20"></textarea>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a class="button submit" onclick="submissionController.submit(${problem.id});" style="margin-right: 20px;">提交</a>
+    <a class="button cancel" onclick="submissionController.showSubmissionEditor();">取消</a>
+</section>
+<section id="discussion-section">
+
+</section>

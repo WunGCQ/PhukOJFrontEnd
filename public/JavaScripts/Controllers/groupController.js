@@ -27,37 +27,37 @@ groupController.showGroup = function (group_id) {
 
 
 };
-groupController.bindNavTab = function(){
-    $("#group-nav .nav-item").click(function(){
+groupController.bindNavTab = function () {
+    $("#group-nav .nav-item").click(function () {
         var tab_id = this.getAttribute("data-click-target");
 
 
-        if(tab_id == "group-member") {
-            if(!document.getElementById("membership-table")) {
+        if (tab_id == "group-member") {
+            if (!document.getElementById("membership-table")) {
                 MembershipController.showMembership(groupController.group_id);
             }
-        } else if(tab_id == "group-problem") {
+        } else if (tab_id == "group-problem") {
 
-            groupProblemListController.showProblemList(1,groupController.group_id);
+            groupProblemListController.showProblemList(1, groupController.group_id);
 
-        } else if(tab_id == "group-contest") {
+        } else if (tab_id == "group-contest") {
 
-            groupContestListController.showContestList(1,groupController.group_id);
+            groupContestListController.showContestList(1, groupController.group_id);
 
         }
 
-        $("#group-nav .nav-item").attr("class","nav-item");
+        $("#group-nav .nav-item").attr("class", "nav-item");
         this.classList.add("active");
 
-        $(".group-tab-page").attr("class","group-tab-page");
+        $(".group-tab-page").attr("class", "group-tab-page");
         document.getElementById(tab_id).classList.add("active");
     });
 };
 groupController.submitGroupApplication = function (group_id) {
     var data = {};
     data["group_id"] = group_id;
-    data["user_id"] = window.currentUser!=undefined? window.currentUser.user_id : cookieMethods.getCookie("user_id");
-    data["nickname"] = window.currentUser!=undefined? window.currentUser.nickname : cookieMethods.getCookie("username");
+    data["user_id"] = window.currentUser != undefined ? window.currentUser.user_id : cookieMethods.getCookie("user_id");
+    data["nickname"] = window.currentUser != undefined ? window.currentUser.nickname : cookieMethods.getCookie("username");
 
     $.ajax(
         {
@@ -66,20 +66,20 @@ groupController.submitGroupApplication = function (group_id) {
             type: 'POST',
             async: true,
             dataType: "json",
-            beforeSend: function(request) {
+            beforeSend: function (request) {
                 var session_id = cookieMethods.getCookie("token");
                 var user_id = cookieMethods.getCookie("user_id");
-                if(user_id!=undefined) {
-                    request.setRequestHeader("user-Id",user_id);
+                if (user_id != undefined) {
+                    request.setRequestHeader("user-Id", user_id);
                 }
                 else {
-                    request.setRequestHeader("user-Id",-1);
+                    request.setRequestHeader("user-Id", -1);
                 }
-                if(session_id!=undefined) {
-                    request.setRequestHeader("Session-Id",session_id);
+                if (session_id != undefined) {
+                    request.setRequestHeader("Session-Id", session_id);
                 }
                 else {
-                    request.setRequestHeader("Session-Id",-1);
+                    request.setRequestHeader("Session-Id", -1);
                 }
 
             },
